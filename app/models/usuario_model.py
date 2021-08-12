@@ -1,8 +1,9 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from sqlalchemy.sql.sqltypes import Date, String
+from sqlalchemy.sql.sqltypes import Date, DateTime, String
 from app.configs.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
+from datetime import datetime
 
 
 class UsuarioModel(db.Model):
@@ -16,7 +17,7 @@ class UsuarioModel(db.Model):
     password_hash = Column(String(511), nullable=False)
     email = Column(String(150), nullable=False)
     data_nascimento = Column(Date)
-    data_regristro = Column(Date, nullable=False)
+    data_regristro = Column(DateTime, default=datetime.now())
     e_pessoa_fisica = Column(Boolean, default=True)
     cpf = Column(String(11))
     cnpj = Column(String(14))
@@ -24,7 +25,7 @@ class UsuarioModel(db.Model):
     pai_nome = Column(String(150))
     observacao = Column(String(511))
     bloqueado = Column(Boolean, default=False)
-    ultimo_login = Column(Date)
+    ultimo_login = Column(DateTime)
     salt = Column(String(100), nullable=False)
 
     @property
