@@ -10,3 +10,4 @@ def init_app(app: Flask) -> None:
     from app.models.usuario_endereco_model import UsuarioEnderecoModel
     from app.models.usuario_permissao_model import UsuarioPermissaoModel
     from app.models.plano_model import PlanoModel
+    from app.models.contrato_model import ContratoModel
