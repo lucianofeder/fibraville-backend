@@ -7,5 +7,6 @@ def init_app(app: Flask) -> None:
 
     from app.models.usuario_model import UsuarioModel
     from app.models.usuario_nao_registrado_model import UsuarioNaoRegistradoModel
-    from app.models.usuario_endereco import UsuarioEnderecoModel
-    from app.models.usuario_permissao import UsuarioPermissaoModel
+    from app.models.usuario_endereco_model import UsuarioEnderecoModel
+    from app.models.usuario_permissao_model import UsuarioPermissaoModel
+    from app.models.plano_model import PlanoModel
