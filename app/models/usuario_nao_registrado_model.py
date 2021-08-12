@@ -11,3 +11,9 @@ class UsuarioNaoRegistradoModel(db.Model):
 
     nome = Column(String(150))
     telefone = Column(String(50), unique=True)
+
+    def serializer(self):
+        return {
+            "nome": self.nome,
+            "telefone": self.telefone
+        }
