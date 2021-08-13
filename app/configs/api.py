@@ -18,4 +18,4 @@ def init_app(app: Flask) -> None:
     from app.models.fornecedor_model import FornecedorModel
     from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
     from app.models.contas_a_pagar_model import ContasAPagarModel
-    
+    from app.models.contas_a_receber_model import ContasAReceberModel
