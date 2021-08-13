@@ -14,4 +14,4 @@ def init_app(app: Flask) -> None:
     from app.models.contrato_usuario_model import ContratoUsuarioModel
     from app.models.produto_model import ProdutoModel
     from app.models.ordem_servico_model import OrdemServicoModel
-    
+    from app.models.visita_tecnica_model import VisitaTecnicaModel
