@@ -20,6 +20,10 @@ class ProdutoModel(db.Model):
     def serializer(self):
         return {
             "id": self.id,
+            "modelo": self.modelo,
+            "marca": self.marca,
             "valor": self.valor,
+            "numero_serie": self.numero_serie,
+            "estoque": self.estoque,
             "velocidade": self.velocidade
         }
