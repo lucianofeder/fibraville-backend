@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer
+from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.elements import collate
 from sqlalchemy.sql.expression import nullslast
 from sqlalchemy.sql.sqltypes import Boolean, DateTime, Float, String
@@ -19,6 +20,8 @@ class OrdemServicoModel(db.Model):
     proposito = Column(String)
     descricao = Column(String)
 
+    visitas_tecnicas_list = relationship("VisitaTecnicaModel", backref=backref("ordem_servico"))
+
     def serializer(self):
         return {
             "id": self.id,
@@ -26,5 +29,6 @@ class OrdemServicoModel(db.Model):
             "data_fechamento": self.data_fechamento,
             "valor": self.valor,
             "proposito": self.proposito,
-            "descricao": self.descricao
+            "descricao": self.descricao,
+            "visitas_tecnicas_list": self.visitas_tecnicas_list
         }

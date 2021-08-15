@@ -18,6 +18,7 @@ class FornecedorModel(db.Model):
 
     endereco_fornecedor_id = Column(Integer, ForeignKey("fornecedor_endereco.id"))
     endereco_fornecedor = relationship("FornecedorEnderecoModel", backref=backref("fornecedor", uselist=False))
+    
     contas_a_pagar_list = relationship("ContasAPagarModel", backref="fornecedor")
 
     def serializer(self):
