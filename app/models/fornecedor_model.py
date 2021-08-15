@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer
-from sqlalchemy.sql.elements import collate
-from sqlalchemy.sql.sqltypes import Boolean, DateTime, Float, String
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy.sql.schema import ForeignKey
 from app.configs.database import db
 
 
@@ -16,7 +16,9 @@ class FornecedorModel(db.Model):
     inscricao_estadual = Column(String(9))
     contato = Column(String(150))
 
-
+    endereco_fornecedor_id = Column(Integer, ForeignKey("fornecedor_endereco.id"))
+    endereco_fornecedor = relationship("FornecedorEnderecoModel", backref=backref("fornecedor", uselist=False))
+    contas_a_pagar_list = relationship("ContasAPagarModel", backref="fornecedor")
 
     def serializer(self):
         return {
@@ -25,5 +27,8 @@ class FornecedorModel(db.Model):
             "nome_fantasia": self.nome_fantasia,
             "cnpj": self.cnpj,
             "inscricao_estadual": self.inscricao_estadual,
-            "contato": self.contato
+            "contato": self.contato,
+            "endereco_fornecedor": self.endereco_fornecedor,
+            "endereco_fornecedor_id": self.endereco_fornecedor_id,
+            "contas_a_pagar_list": self.contas_a_pagar_list
         }
