@@ -3,18 +3,18 @@ from sqlalchemy.sql.schema import ForeignKey
 from app.configs.database import db
 
 
-class ProdutoFornecedorModel(db.Model):
+class PlanoProdutoModel(db.Model):
 
-    __tablename__ = "produto_fornecedor"
+    __tablename__ = "plano_produto"
 
     id = Column(Integer, primary_key=True)
 
+    plano_id = Column(Integer, ForeignKey("plano.id"))
     produto_id = Column(Integer, ForeignKey("produto.id"))
-    fornecedor_id = Column(Integer, ForeignKey("fornecedor.id"))
 
     def serializer(self):
         return {
             "id": self.id,
-            "produto_id": self.produto_id,
-            "fornecedor_id": self.fornecedor_id
+            "plano_id": self.plano_id,
+            "produto_id": self.produto_id
         }   

@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, DateTime, String
+from sqlalchemy.orm import relationship
 from app.configs.database import db
 
 
@@ -11,6 +12,8 @@ class VisitaTecnicaModel(db.Model):
     data_agendamento = Column(DateTime, nullable=False)
     duracao_estimada = Column(Integer, nullable=False)
     observacao = Column(String)
+
+    produtos_list = relationship("ProdutoModel", secondary="visita_tecnica_produto", backref="visitas_tecnicas_list")
 
     def serializer(self):
         return {

@@ -18,6 +18,7 @@ class ProdutoModel(db.Model):
     estoque = Column(Float, default=0)
     velocidade = Column(Float, default=False)
 
+    planos_list = relationship("FornecedorModel", secondary="plano_produto", backref="produtos_list")
     fornecedores_list = relationship("FornecedorModel", secondary="produto_fornecedor", backref="produtos_list")
 
     def serializer(self):
@@ -29,5 +30,6 @@ class ProdutoModel(db.Model):
             "numero_serie": self.numero_serie,
             "estoque": self.estoque,
             "velocidade": self.velocidade,
-            "fornecedores_list": self.fornecedores_list
+            "fornecedores_list": self.fornecedores_list,
+            "planos_list": self.planos_list
         }
