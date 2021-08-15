@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.elements import collate
 from sqlalchemy.sql.expression import nullslast
+from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, DateTime, Float, String
 from app.configs.database import db
 from datetime import datetime
@@ -19,6 +20,8 @@ class OrdemServicoModel(db.Model):
     valor = Column(Float, nullable=False)
     proposito = Column(String)
     descricao = Column(String)
+
+    usuario_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
 
     visitas_tecnicas_list = relationship("VisitaTecnicaModel", backref=backref("ordem_servico"))
 

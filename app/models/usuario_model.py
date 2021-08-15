@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.sqltypes import Date, DateTime, String
 from app.configs.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,7 +27,9 @@ class UsuarioModel(db.Model):
     observacao = Column(String(511))
     bloqueado = Column(Boolean, default=False)
     ultimo_login = Column(DateTime)
-    salt = Column(String(100), nullable=False)
+    salt = Column(String(16), nullable=False)
+
+    ordens_servicos_list = relationship("OrdemServicoModel", backref="usuario")
 
     @property
     def password(self):
@@ -58,6 +61,7 @@ class UsuarioModel(db.Model):
             "ultimo_login": self.ultimo_login,
             "mae_nome": self.mae_nome,
             "pai_nome": self.pai_nome,
+            "ordens_servico_list": self.ordens_servicos_list
         }
 
         if len(self.cpf) > 0:
