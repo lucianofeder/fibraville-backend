@@ -1,4 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import backref, relationship
+from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Date, DateTime, String
 from app.configs.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,7 +28,14 @@ class UsuarioModel(db.Model):
     observacao = Column(String(511))
     bloqueado = Column(Boolean, default=False)
     ultimo_login = Column(DateTime)
-    salt = Column(String(100), nullable=False)
+    salt = Column(String(16), nullable=False)
+
+    usuario_permissao = relationship("UsuarioPermissaoModel", backref=backref("usuario", uselist=False))
+    usuario_permissao_id = Column(Integer, ForeignKey("usuario_permissao.id"), nullable=False)
+
+    contas_list = relationship("ContasAReceber", backref="usuario")
+    ordens_servicos_list = relationship("OrdemServicoModel", backref="usuario")
+    contratos_list = relationship("ContratoModel", secondary="contrato_usuario", backref="usuarios_list")
 
     @property
     def password(self):
@@ -58,6 +67,11 @@ class UsuarioModel(db.Model):
             "ultimo_login": self.ultimo_login,
             "mae_nome": self.mae_nome,
             "pai_nome": self.pai_nome,
+            "ordens_servico_list": self.ordens_servicos_list,
+            "usuario_permissao": self.usuario_permissao,
+            "contas_list": self.contas_list,
+            "ordens_servicos_list": self.ordens_servicos_list,
+            "contratos_list": self.contratos_list
         }
 
         if len(self.cpf) > 0:

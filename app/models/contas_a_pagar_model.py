@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer
+from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, Date, DateTime, Float, String
 from app.configs.database import db
 from datetime import datetime
@@ -19,6 +20,8 @@ class ContasAPagarModel(db.Model):
     n_documento = Column(String(150))
     pago = Column(Boolean, default=False)
 
+    fornecedor_id = Column(Integer, ForeignKey("fornecedor.id"), nullable=False)
+
     def serializer(self):
         return {
             "id": self.id,
@@ -28,5 +31,6 @@ class ContasAPagarModel(db.Model):
             "data_a_pagar": self.data_a_pagar,
             "nfe": self.nfe,
             "n_documento": self.n_documento,
-            "pago": self.pago
+            "pago": self.pago,
+            "fornecedor_id": self.fornecedor_id
         }
