@@ -54,7 +54,7 @@ class UsuarioModel(db.Model):
         return check_password_hash(self.password_hash + self.salt, password_to_compare)
 
 
-    def serialize(self):
+    def serializer(self):
         data = {
             "nome": self.nome,
             "sobrenome": self.sobrenome,
@@ -70,6 +70,7 @@ class UsuarioModel(db.Model):
             "pai_nome": self.pai_nome,
             "ordens_servico_list": self.ordens_servicos_list,
             "usuario_permissao": self.usuario_permissao,
+            "usuario_endereco_list": self.usuario_endereco_list,
             "contas_list": self.contas_list,
             "ordens_servicos_list": self.ordens_servicos_list,
             "contratos_list": self.contratos_list
