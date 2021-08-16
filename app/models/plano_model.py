@@ -1,10 +1,17 @@
 from sqlalchemy import Column, Integer
-from sqlalchemy.sql.sqltypes import Boolean, Float
+from sqlalchemy.sql.sqltypes import Float
 from sqlalchemy.orm import relationship
 from app.configs.database import db
+from dataclasses import dataclass
+# from app.models.produto_model import ProdutoModel
 
 
+@dataclass(frozen=True, order=True)
 class PlanoModel(db.Model):
+    id: int
+    valor: float
+    velocidade: float
+    produtos_list: list #list[ProdutoModel]
 
     __tablename__ = "plano"
 
@@ -13,12 +20,12 @@ class PlanoModel(db.Model):
     valor = Column(Float, nullable=False)
     velocidade = Column(Float, default=False)
 
-    produtos_list = relationship("FornecedorModel", secondary="plano_produto", backref="planos_list")
+    produtos_list = relationship("ProdutoModel", secondary="plano_produto", backref="planos_list")
 
-    def serializer(self):
-        return {
-            "id": self.id,
-            "valor": self.valor,
-            "velocidade": self.velocidade,
-            "produtos_list": self.produtos_list
-        }
+    # def serializer(self):
+    #     return {
+    #         "id": self.id,
+    #         "valor": self.valor,
+    #         "velocidade": self.velocidade,
+    #         "produtos_list": self.produtos_list
+    #     }

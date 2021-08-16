@@ -1,11 +1,22 @@
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, Float, String
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql.expression import nullslast
-from sqlalchemy.sql.sqltypes import Boolean, Float, String
 from app.configs.database import db
+from dataclasses import dataclass
+# from app.models.fornecedor_model import FornecedorModel
+# from app.models.plano_model import PlanoModel
 
 
+@dataclass(frozen=True, order=True)
 class ProdutoModel(db.Model):
+    id: int
+    modelo: str
+    marca: str
+    valor: float
+    numero_serie: str
+    estoque: float
+    velocidade: float
+    planos_list: list #list[PlanoModel]
+    fornecedores_list: list #list[FornecedorModel]
 
     __tablename__ = "produto"
 
@@ -18,18 +29,18 @@ class ProdutoModel(db.Model):
     estoque = Column(Float, default=0)
     velocidade = Column(Float, default=False)
 
-    planos_list = relationship("FornecedorModel", secondary="plano_produto", backref="produtos_list")
+    planos_list = relationship("PlanoModel", secondary="plano_produto", backref="produtos_list")
     fornecedores_list = relationship("FornecedorModel", secondary="produto_fornecedor", backref="produtos_list")
 
-    def serializer(self):
-        return {
-            "id": self.id,
-            "modelo": self.modelo,
-            "marca": self.marca,
-            "valor": self.valor,
-            "numero_serie": self.numero_serie,
-            "estoque": self.estoque,
-            "velocidade": self.velocidade,
-            "fornecedores_list": self.fornecedores_list,
-            "planos_list": self.planos_list
-        }
+    # def serializer(self):
+    #     return {
+    #         "id": self.id,
+    #         "modelo": self.modelo,
+    #         "marca": self.marca,
+    #         "valor": self.valor,
+    #         "numero_serie": self.numero_serie,
+    #         "estoque": self.estoque,
+    #         "velocidade": self.velocidade,
+    #         "fornecedores_list": self.fornecedores_list,
+    #         "planos_list": self.planos_list
+    #     }
