@@ -33,6 +33,7 @@ class UsuarioModel(db.Model):
     usuario_permissao = relationship("UsuarioPermissaoModel", backref=backref("usuario", uselist=False))
     usuario_permissao_id = Column(Integer, ForeignKey("usuario_permissao.id"), nullable=False)
 
+    usuario_endereco_list = relationship("UsuarioEnderecoModel", backref="usuario")
     contas_list = relationship("ContasAReceber", backref="usuario")
     ordens_servicos_list = relationship("OrdemServicoModel", backref="usuario")
     contratos_list = relationship("ContratoModel", secondary="contrato_usuario", backref="usuarios_list")

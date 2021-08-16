@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.sql.expression import null
+from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, String
 from app.configs.database import db
 
@@ -25,6 +25,8 @@ class UsuarioEnderecoModel(db.Model):
     onu_login = Column(String(150))
     onu_senha = Column(String(150))
 
+    usuario_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
+    contrato_usuario_id = Column(Integer, ForeignKey("contrato_usuario.id"))
 
     def serializer(self):
         return {
