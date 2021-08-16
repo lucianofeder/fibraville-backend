@@ -1,9 +1,11 @@
 from sqlalchemy import Column, Integer
-from sqlalchemy.sql.sqltypes import Boolean, Float
+from sqlalchemy.sql.sqltypes import Float
 from sqlalchemy.orm import relationship
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class PlanoModel(db.Model):
 
     __tablename__ = "plano"

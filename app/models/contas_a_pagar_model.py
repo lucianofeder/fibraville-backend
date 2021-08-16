@@ -3,9 +3,10 @@ from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, Date, DateTime, Float, String
 from app.configs.database import db
 from datetime import datetime
+from dataclasses import dataclass
 
 
-
+@dataclass(frozen=True, order=True)
 class ContasAPagarModel(db.Model):
 
     __tablename__ = "contas_a_pagar"

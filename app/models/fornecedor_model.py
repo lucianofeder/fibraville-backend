@@ -2,8 +2,10 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.sql.schema import ForeignKey
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class FornecedorModel(db.Model):
 
     __tablename__ = "fornecedor"

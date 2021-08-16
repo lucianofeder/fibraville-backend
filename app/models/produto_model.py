@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, Float, String
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql.expression import nullslast
-from sqlalchemy.sql.sqltypes import Boolean, Float, String
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class ProdutoModel(db.Model):
 
     __tablename__ = "produto"

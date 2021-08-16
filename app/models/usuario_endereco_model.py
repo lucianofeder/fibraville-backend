@@ -2,8 +2,10 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, String
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class UsuarioEnderecoModel(db.Model):
 
     __tablename__ = "usuario_endereco"

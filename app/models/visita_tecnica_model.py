@@ -2,8 +2,10 @@ from sqlalchemy import Column, Integer, DateTime, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class VisitaTecnicaModel(db.Model):
 
     __tablename__ = "visita_tecnica"

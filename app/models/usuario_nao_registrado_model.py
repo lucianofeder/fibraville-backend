@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.sql.sqltypes import String
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class UsuarioNaoRegistradoModel(db.Model):
 
     __tablename__ = "usuario_nao_registrado"

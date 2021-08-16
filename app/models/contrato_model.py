@@ -1,10 +1,11 @@
-from sqlalchemy import Column, Integer
+from sqlalchemy import Column, Integer, Float
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
-from sqlalchemy.sql.sqltypes import Boolean, Float
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class ContratoModel(db.Model):
 
     __tablename__ = "contrato"

@@ -6,8 +6,10 @@ from app.configs.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from datetime import datetime
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class UsuarioModel(db.Model):
 
     __tablename__ = "usuario"

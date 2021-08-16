@@ -1,14 +1,13 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import backref, relationship
-from sqlalchemy.sql.elements import collate
-from sqlalchemy.sql.expression import nullslast
 from sqlalchemy.sql.schema import ForeignKey
-from sqlalchemy.sql.sqltypes import Boolean, DateTime, Float, String
+from sqlalchemy.sql.sqltypes import DateTime, Float, String
 from app.configs.database import db
 from datetime import datetime
+from dataclasses import dataclass
 
 
-
+@dataclass(frozen=True, order=True)
 class OrdemServicoModel(db.Model):
 
     __tablename__ = "ordem_servico"

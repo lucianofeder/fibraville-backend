@@ -1,8 +1,10 @@
 from sqlalchemy import Column, Integer, Date, ForeignKey, Float
 from sqlalchemy.orm import relationship, backref
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class ContratoUsuarioModel(db.Model):
 
     __tablename__ = "contrato_usuario"

@@ -1,9 +1,9 @@
-from sqlalchemy import Column, Integer
-from sqlalchemy.sql.elements import collate
-from sqlalchemy.sql.sqltypes import Boolean, DateTime, Float, String
+from sqlalchemy import Column, Integer, String
 from app.configs.database import db
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, order=True)
 class FornecedorEnderecoModel(db.Model):
 
     __tablename__ = "fornecedor_endereco"
