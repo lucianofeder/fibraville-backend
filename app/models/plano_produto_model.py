@@ -6,17 +6,20 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True, order=True)
 class PlanoProdutoModel(db.Model):
+    id: int
+    plano_id: int
+    produto_id: int
 
     __tablename__ = "plano_produto"
 
     id = Column(Integer, primary_key=True)
 
-    plano_id = Column(Integer, ForeignKey("plano.id"))
-    produto_id = Column(Integer, ForeignKey("produto.id"))
+    plano_id = Column(Integer, ForeignKey("plano.id"), nullable=False)
+    produto_id = Column(Integer, ForeignKey("produto.id"), nullable=False)
 
-    def serializer(self):
-        return {
-            "id": self.id,
-            "plano_id": self.plano_id,
-            "produto_id": self.produto_id
-        }   
+    # def serializer(self):
+    #     return {
+    #         "id": self.id,
+    #         "plano_id": self.plano_id,
+    #         "produto_id": self.produto_id
+    #     }   

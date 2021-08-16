@@ -3,10 +3,21 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.sql.schema import ForeignKey
 from app.configs.database import db
 from dataclasses import dataclass
+# from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
+# from app.models.contas_a_pagar_model import ContasAPagarModel
 
 
 @dataclass(frozen=True, order=True)
 class FornecedorModel(db.Model):
+    id: int
+    razao_social: str
+    nome_fantasia: str
+    cnpj: str
+    inscricao_estadual: str
+    contato: str
+    endereco_fornecedor_id: int
+    # endereco_fornecedor: FornecedorEnderecoModel
+    contas_a_pagar_list: list #list[ContasAPagarModel]
 
     __tablename__ = "fornecedor"
 

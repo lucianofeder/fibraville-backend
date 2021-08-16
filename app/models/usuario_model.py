@@ -7,10 +7,40 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from datetime import datetime
 from dataclasses import dataclass
+# from app.models.usuario_permissao_model import UsuarioPermissaoModel
+# from app.models.usuario_endereco_model import UsuarioEnderecoModel
+# from app.models.contas_a_receber_model import ContasAReceberModel
+# from app.models.ordem_servico_model import OrdemServicoModel
+# from app.models.atendimento_model import AtendimentoModel
+# from app.models.contrato_model import ContratoModel
 
 
 @dataclass(frozen=True, order=True)
 class UsuarioModel(db.Model):
+    id: int
+    nome: str
+    sobrenome: str
+    email: str
+    data_nascimento: datetime
+    data_regristro: datetime
+    e_pessoa_fisica: bool
+    cpf: str
+    cnpj: str
+    mae_nome: str
+    pai_nome: str
+    observacao: str
+    bloqueado: bool
+    ultimo_login: datetime
+    salt: str
+    usuario_permissao_id: int
+    # usuario_permissao: UsuarioPermissaoModel
+    usuario_endereco_list: list #list[UsuarioEnderecoModel]
+    contas_list: list #list[ContasAReceberModel]
+    ordens_servicos_list: list #list[OrdemServicoModel]
+    atendimentos_recebidos_list: list #list[AtendimentoModel]
+    atendimentos_realizados_list: list #list[AtendimentoModel]
+    contratos_list: list #list[ContratoModel]
+
 
     __tablename__ = "usuario"
 
@@ -38,6 +68,8 @@ class UsuarioModel(db.Model):
     usuario_endereco_list = relationship("UsuarioEnderecoModel", backref="usuario")
     contas_list = relationship("ContasAReceber", backref="usuario")
     ordens_servicos_list = relationship("OrdemServicoModel", backref="usuario")
+    atendimentos_recebidos_list = relationship("atendimento.usuario_id", backref="usuario")
+    atendimentos_realizados_list = relationship("atendimento.atendente_id", backref="atendente")
     contratos_list = relationship("ContratoModel", secondary="contrato_usuario", backref="usuarios_list")
 
     @property
@@ -56,31 +88,31 @@ class UsuarioModel(db.Model):
         return check_password_hash(self.password_hash + self.salt, password_to_compare)
 
 
-    def serializer(self):
-        data = {
-            "nome": self.nome,
-            "sobrenome": self.sobrenome,
-            "email": self.email,
-            "data_nascimento": self.data_nascimento,
-            "data_registro": self.data_regristro,
-            "bloqueado": self.bloqueado,
-            "e_pessoa_fisica": self.e_pessoa_fisica,
-            "cpf": self.cpf,
-            "cnpj": self.cnpj,
-            "ultimo_login": self.ultimo_login,
-            "mae_nome": self.mae_nome,
-            "pai_nome": self.pai_nome,
-            "ordens_servico_list": self.ordens_servicos_list,
-            "usuario_permissao": self.usuario_permissao,
-            "usuario_endereco_list": self.usuario_endereco_list,
-            "contas_list": self.contas_list,
-            "ordens_servicos_list": self.ordens_servicos_list,
-            "contratos_list": self.contratos_list
-        }
+    # def serializer(self):
+    #     data = {
+    #         "nome": self.nome,
+    #         "sobrenome": self.sobrenome,
+    #         "email": self.email,
+    #         "data_nascimento": self.data_nascimento,
+    #         "data_registro": self.data_regristro,
+    #         "bloqueado": self.bloqueado,
+    #         "e_pessoa_fisica": self.e_pessoa_fisica,
+    #         "cpf": self.cpf,
+    #         "cnpj": self.cnpj,
+    #         "ultimo_login": self.ultimo_login,
+    #         "mae_nome": self.mae_nome,
+    #         "pai_nome": self.pai_nome,
+    #         "ordens_servico_list": self.ordens_servicos_list,
+    #         "usuario_permissao": self.usuario_permissao,
+    #         "usuario_endereco_list": self.usuario_endereco_list,
+    #         "contas_list": self.contas_list,
+    #         "ordens_servicos_list": self.ordens_servicos_list,
+    #         "contratos_list": self.contratos_list
+    #     }
 
-        if len(self.cpf) > 0:
-            data.pop('cnpj')
-        else:
-            data.pop('cpf')
+    #     if len(self.cpf) > 0:
+    #         data.pop('cnpj')
+    #     else:
+    #         data.pop('cpf')
         
-        return data
+    #     return data

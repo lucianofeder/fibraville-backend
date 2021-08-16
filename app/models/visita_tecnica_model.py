@@ -1,12 +1,22 @@
+from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from app.configs.database import db
 from dataclasses import dataclass
+# from app.models.produto_model import ProdutoModel
+# from app.models.usuario_model import UsuarioModel
 
 
 @dataclass(frozen=True, order=True)
 class VisitaTecnicaModel(db.Model):
+    id: int
+    data_agendamento: datetime
+    duracao_estimada: int
+    observacao: str
+    ordem_servico_id: int
+    produtos_list: list #list[ProdutoModel]
+    tecnicos_list: list #list[UsuarioModel]
 
     __tablename__ = "visita_tecnica"
 
@@ -21,13 +31,13 @@ class VisitaTecnicaModel(db.Model):
     produtos_list = relationship("ProdutoModel", secondary="visita_tecnica_produto", backref="visitas_tecnicas_list")
     tecnicos_list = relationship("UsuarioModel", secondary="visita_tecnica_tecnico", backref="visitas_tecnicas_list")
 
-    def serializer(self):
-        return {
-            "id": self.id,
-            "data_agendamento": self.data_agendamento,
-            "duracao_estimada": self.duracao_estimada,
-            "observacao": self.observacao,
-            "produtos_list": self.produtos_list,
-            "tecnicos_list": self.tecnicos_list,
-            "ordem_servico_id": self.ordem_servico_id
-        }
+    # def serializer(self):
+    #     return {
+    #         "id": self.id,
+    #         "data_agendamento": self.data_agendamento,
+    #         "duracao_estimada": self.duracao_estimada,
+    #         "observacao": self.observacao,
+    #         "produtos_list": self.produtos_list,
+    #         "tecnicos_list": self.tecnicos_list,
+    #         "ordem_servico_id": self.ordem_servico_id
+    #     }

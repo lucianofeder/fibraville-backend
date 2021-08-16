@@ -5,6 +5,15 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True, order=True)
 class FornecedorEnderecoModel(db.Model):
+    id: int
+    cep: str
+    rua: str
+    numero: str
+    bairro: str
+    cidade: str
+    estado: str
+    complemento: str
+    referencia: str
 
     __tablename__ = "fornecedor_endereco"
 
@@ -19,15 +28,15 @@ class FornecedorEnderecoModel(db.Model):
     complemento = Column(String(150))
     referencia = Column(String(150))
 
-    def serializer(self):
-        return {
-            "id": self.id,
-            "cep": self.cep,
-            "rua": self.rua,
-            "numero": self.numero,
-            "bairro": self.bairro,
-            "cidade": self.cidade,
-            "estado": self.estado,
-            "complemento": self.complemento,
-            "referencia": self.referencia
-        }
+    # def serializer(self):
+    #     return {
+    #         "id": self.id,
+    #         "cep": self.cep,
+    #         "rua": self.rua,
+    #         "numero": self.numero,
+    #         "bairro": self.bairro,
+    #         "cidade": self.cidade,
+    #         "estado": self.estado,
+    #         "complemento": self.complemento,
+    #         "referencia": self.referencia
+    #     }
