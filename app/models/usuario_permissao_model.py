@@ -1,10 +1,11 @@
 from sqlalchemy import Column, Integer, Boolean
 from app.services.helper import BaseServices
+from app.configs.database import db
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class UsuarioPermissaoModel(BaseServices):
+class UsuarioPermissaoModel(db.Model, BaseServices):
     id: int
     e_cliente: bool
     e_representante: bool

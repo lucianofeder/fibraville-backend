@@ -1,10 +1,11 @@
 from sqlalchemy import Column, Integer, String
 from app.services.helper import BaseServices
+from app.configs.database import db
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class FornecedorEnderecoModel(BaseServices):
+class FornecedorEnderecoModel(db.Model, BaseServices):
     id: int
     cep: str
     rua: str

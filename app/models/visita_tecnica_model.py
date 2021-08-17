@@ -3,13 +3,14 @@ from sqlalchemy import Column, Integer, DateTime, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from app.services.helper import BaseServices
+from app.configs.database import db
 from dataclasses import dataclass
 # from app.models.produto_model import ProdutoModel
 # from app.models.usuario_model import UsuarioModel
 
 
 @dataclass(frozen=True, order=True)
-class VisitaTecnicaModel(BaseServices):
+class VisitaTecnicaModel(db.Model, BaseServices):
     id: int
     data_agendamento: datetime
     duracao_estimada: int

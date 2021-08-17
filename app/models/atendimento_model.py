@@ -3,12 +3,13 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import DateTime, String
 from app.services.helper import BaseServices
+from app.configs.database import db
 from dataclasses import dataclass
 from datetime import datetime
 
 
 @dataclass(frozen=True, order=True)
-class AtendimentoModel(BaseServices):
+class AtendimentoModel(db.Model, BaseServices):
     id: int
     data: datetime
     descricao: str

@@ -1,13 +1,14 @@
 from sqlalchemy import Column, Integer, Float, String
 from sqlalchemy.orm import relationship
 from app.services.helper import BaseServices
+from app.configs.database import db
 from dataclasses import dataclass
 # from app.models.fornecedor_model import FornecedorModel
 # from app.models.plano_model import PlanoModel
 
 
 @dataclass(frozen=True, order=True)
-class ProdutoModel(BaseServices):
+class ProdutoModel(db.Model, BaseServices):
     id: int
     modelo: str
     marca: str

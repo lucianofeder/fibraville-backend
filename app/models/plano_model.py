@@ -2,12 +2,13 @@ from sqlalchemy import Column, Integer
 from sqlalchemy.sql.sqltypes import Float
 from sqlalchemy.orm import relationship
 from app.services.helper import BaseServices
+from app.configs.database import db
 from dataclasses import dataclass
 # from app.models.produto_model import ProdutoModel
 
 
 @dataclass(frozen=True, order=True)
-class PlanoModel(BaseServices):
+class PlanoModel(db.Model, BaseServices):
     id: int
     valor: float
     velocidade: float

@@ -3,6 +3,7 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Date, DateTime, String
 from app.services.helper import BaseServices
+from app.configs.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from datetime import datetime
@@ -16,7 +17,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class UsuarioModel(BaseServices):
+class UsuarioModel(db.Model, BaseServices):
     id: int
     nome: str
     sobrenome: str

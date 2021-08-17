@@ -2,13 +2,14 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.sql.schema import ForeignKey
 from app.services.helper import BaseServices
+from app.configs.database import db
 from dataclasses import dataclass
 # from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
 # from app.models.contas_a_pagar_model import ContasAPagarModel
 
 
 @dataclass(frozen=True, order=True)
-class FornecedorModel(BaseServices):
+class FornecedorModel(db.Model, BaseServices):
     id: int
     razao_social: str
     nome_fantasia: str
