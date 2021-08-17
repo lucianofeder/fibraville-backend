@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from app.services.helper import add_commit
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class UsuarioNaoRegistradoModel(db.Model):
     id: int
     nome: str

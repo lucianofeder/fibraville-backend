@@ -5,7 +5,7 @@ from app.configs.database import db
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class VisitaTecnicaTecnicoModel(db.Model):
     id: int
     tecnico_id: int

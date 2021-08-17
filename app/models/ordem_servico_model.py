@@ -9,7 +9,7 @@ from dataclasses import dataclass
 # from app.models.visita_tecnica_model import VisitaTecnicaModel
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class OrdemServicoModel(db.Model):
     id: int
     data_abertura: datetime
@@ -32,7 +32,7 @@ class OrdemServicoModel(db.Model):
 
     usuario_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
 
-    visitas_tecnicas_list = relationship("VisitaTecnicaModel", backref=backref("ordem_servico_id"))
+    visitas_tecnicas_list = relationship("VisitaTecnicaModel", backref=backref("ordem_servico"))
 
     # def serializer(self):
     #     return {

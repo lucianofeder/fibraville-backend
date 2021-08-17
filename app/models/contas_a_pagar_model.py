@@ -7,7 +7,7 @@ from datetime import datetime
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class ContasAPagarModel(db.Model):
     id: int
     valor: float

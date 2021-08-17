@@ -16,7 +16,7 @@ from dataclasses import dataclass
 # from app.models.contrato_model import ContratoModel
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class UsuarioModel(db.Model):
     id: int
     nome: str

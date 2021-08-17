@@ -5,7 +5,7 @@ from http import HTTPStatus
 
 def get_all() -> list[UsuarioNaoRegistradoModel]:
     data_list: list[UsuarioNaoRegistradoModel] = UsuarioNaoRegistradoModel.query.all()
-    return [usuario.serialize() for usuario in data_list]
+    return [usuario for usuario in data_list]
 
 
 def get_usuario_by_telefone(data):

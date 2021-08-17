@@ -4,7 +4,7 @@ from app.configs.database import db
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class UsuarioPermissaoModel(db.Model):
     id: int
     e_cliente: bool

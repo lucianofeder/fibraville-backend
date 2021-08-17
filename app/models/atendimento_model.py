@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class AtendimentoModel(db.Model):
     id: int
     data: datetime

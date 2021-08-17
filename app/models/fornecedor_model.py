@@ -8,7 +8,7 @@ from dataclasses import dataclass
 # from app.models.contas_a_pagar_model import ContasAPagarModel
 
 
-@dataclass(frozen=True, order=True)
+@dataclass
 class FornecedorModel(db.Model):
     id: int
     razao_social: str
