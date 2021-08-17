@@ -1,12 +1,12 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, String
-from app.configs.database import db
+from app.services.helper import BaseServices
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class UsuarioEnderecoModel(db.Model):
+class UsuarioEnderecoModel(BaseServices):
     id: int
     e_comercial: bool
     cep: str

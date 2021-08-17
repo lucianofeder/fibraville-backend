@@ -1,11 +1,11 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.sql.schema import ForeignKey
-from app.configs.database import db
+from app.services.helper import BaseServices
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class VisitaTecnicaTecnicoModel(db.Model):
+class VisitaTecnicaTecnicoModel(BaseServices):
     id: int
     tecnico_id: int
     visita_tecnica_id: int

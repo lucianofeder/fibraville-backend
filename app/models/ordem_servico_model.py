@@ -2,14 +2,14 @@ from sqlalchemy import Column, Integer
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import DateTime, Float, String
-from app.configs.database import db
+from app.services.helper import BaseServices
 from datetime import datetime
 from dataclasses import dataclass
 # from app.models.visita_tecnica_model import VisitaTecnicaModel
 
 
 @dataclass(frozen=True, order=True)
-class OrdemServicoModel(db.Model):
+class OrdemServicoModel(BaseServices):
     id: int
     data_abertura: datetime
     data_fechamento: datetime

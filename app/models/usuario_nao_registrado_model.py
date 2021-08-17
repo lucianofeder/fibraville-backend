@@ -1,11 +1,11 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.sql.sqltypes import String
-from app.configs.database import db
+from app.services.helper import BaseServices
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class UsuarioNaoRegistradoModel(db.Model):
+class UsuarioNaoRegistradoModel(BaseServices):
     id: int
     nome: str
     telefone: str
