@@ -8,13 +8,13 @@ from datetime import datetime
 
 
 @dataclass(frozen=True, order=True)
-class ContratoUsuarioModel(db.Model, BaseServices):
+class ContratoUsuarioModel(db.Model):
     id: int
     data_inicio: datetime
     data_fim: datetime
     valor_contrato: float
     contrato_id: int
-    usuario_id: int
+    # usuario_id: int
     usuario_endereco_id: int
     # usuario_endereco: UsuarioEnderecoModel
 
@@ -27,7 +27,6 @@ class ContratoUsuarioModel(db.Model, BaseServices):
     valor_contrato = Column(Float, nullable=False)
 
     contrato_id = Column(Integer, ForeignKey("contrato.id"))
-    usuario_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
     usuario_endereco_id = Column(Integer, ForeignKey("usuario_endereco.id"), nullable=False)
     
     usuario_endereco = relationship("UsuarioEnderecoModel", backref=backref("contrato_usuario", uselist=False))

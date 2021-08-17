@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class VisitaTecnicaModel(db.Model, BaseServices):
+class VisitaTecnicaModel(db.Model):
     id: int
     data_agendamento: datetime
     duracao_estimada: int

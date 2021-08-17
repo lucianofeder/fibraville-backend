@@ -3,10 +3,11 @@ from sqlalchemy.sql.sqltypes import String
 from app.services.helper import BaseServices
 from app.configs.database import db
 from dataclasses import dataclass
+from app.services.helper import add_commit
 
 
 @dataclass(frozen=True, order=True)
-class UsuarioNaoRegistradoModel(db.Model, BaseServices):
+class UsuarioNaoRegistradoModel(db.Model):
     id: int
     nome: str
     telefone: str
@@ -34,6 +35,9 @@ class UsuarioNaoRegistradoModel(db.Model, BaseServices):
     bairro = Column(String(150))
     cidade = Column(String(150))
     estado = Column(String(150))
+
+    def save(self):
+        return add_commit(self)
 
     # def serializer(self):
     #     return {

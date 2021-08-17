@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class OrdemServicoModel(db.Model, BaseServices):
+class OrdemServicoModel(db.Model):
     id: int
     data_abertura: datetime
     data_fechamento: datetime

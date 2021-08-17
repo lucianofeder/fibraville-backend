@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class ContratoModel(db.Model, BaseServices):
+class ContratoModel(db.Model):
     id: int
     valor: float
     duracao_meses: int

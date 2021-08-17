@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class UsuarioPermissaoModel(db.Model, BaseServices):
+class UsuarioPermissaoModel(db.Model):
     id: int
     e_cliente: bool
     e_representante: bool

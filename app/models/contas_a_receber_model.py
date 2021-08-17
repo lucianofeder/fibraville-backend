@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 @dataclass(frozen=True, order=True)
-class ContasAReceberModel(db.Model, BaseServices):
+class ContasAReceberModel(db.Model):
     id: int
     valor: float
     data_a_pagar: datetime

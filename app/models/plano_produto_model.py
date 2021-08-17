@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class PlanoProdutoModel(db.Model, BaseServices):
+class PlanoProdutoModel(db.Model):
     id: int
     plano_id: int
     produto_id: int

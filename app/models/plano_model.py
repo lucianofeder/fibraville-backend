@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class PlanoModel(db.Model, BaseServices):
+class PlanoModel(db.Model):
     id: int
     valor: float
     velocidade: float
