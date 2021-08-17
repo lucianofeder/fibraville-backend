@@ -67,7 +67,7 @@ class UsuarioModel(db.Model, BaseServices):
     usuario_permissao_id = Column(Integer, ForeignKey("usuario_permissao.id"), nullable=False)
 
     usuario_endereco_list = relationship("UsuarioEnderecoModel", backref="usuario")
-    contas_list = relationship("ContasAReceber", backref="usuario")
+    contas_list = relationship("ContasAReceberModel", backref="usuario")
     ordens_servicos_list = relationship("OrdemServicoModel", backref="usuario")
     atendimentos_recebidos_list = relationship("atendimento.usuario_id", backref="usuario")
     atendimentos_realizados_list = relationship("atendimento.atendente_id", backref="atendente")
