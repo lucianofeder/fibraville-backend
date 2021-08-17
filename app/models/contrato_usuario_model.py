@@ -1,13 +1,13 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, Float
 from sqlalchemy.orm import relationship, backref
-from app.configs.database import db
+from app.services.helper import BaseServices
 from dataclasses import dataclass
 from datetime import datetime
 # from app.models.usuario_endereco_model import UsuarioEnderecoModel
 
 
 @dataclass(frozen=True, order=True)
-class ContratoUsuarioModel(db.Model):
+class ContratoUsuarioModel(BaseServices):
     id: int
     data_inicio: datetime
     data_fim: datetime

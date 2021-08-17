@@ -1,13 +1,13 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, DateTime, Date, Float, String
-from app.configs.database import db
+from app.services.helper import BaseServices
 from datetime import datetime
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True, order=True)
-class ContasAPagarModel(db.Model):
+class ContasAPagarModel(BaseServices):
     id: int
     valor: float
     data_digitado: datetime
