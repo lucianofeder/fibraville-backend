@@ -16,8 +16,8 @@ from dataclasses import dataclass
 # from app.models.contrato_model import ContratoModel
 
 
-@dataclass(frozen=True, order=True)
-class UsuarioModel(db.Model, BaseServices):
+@dataclass
+class UsuarioModel(db.Model):
     id: int
     nome: str
     sobrenome: str
@@ -39,8 +39,8 @@ class UsuarioModel(db.Model, BaseServices):
     contas_list: list #list[ContasAReceberModel]
     ordens_servicos_list: list #list[OrdemServicoModel]
     atendimentos_recebidos_list: list #list[AtendimentoModel]
-    atendimentos_realizados_list: list #list[AtendimentoModel]
-    contratos_list: list #list[ContratoModel]
+    # atendimentos_realizados_list: list #list[AtendimentoModel]
+    # contratos_list: list #list[ContratoModel]
 
 
     __tablename__ = "usuario"
@@ -69,9 +69,8 @@ class UsuarioModel(db.Model, BaseServices):
     usuario_endereco_list = relationship("UsuarioEnderecoModel", backref="usuario")
     contas_list = relationship("ContasAReceberModel", backref="usuario")
     ordens_servicos_list = relationship("OrdemServicoModel", backref="usuario")
-    atendimentos_recebidos_list = relationship("atendimento.usuario_id", backref="usuario")
-    atendimentos_realizados_list = relationship("atendimento.atendente_id", backref="atendente")
-    contratos_list = relationship("ContratoModel", secondary="contrato_usuario", backref="usuarios_list")
+    atendimentos_recebidos_list = relationship("AtendimentoModel", backref="usuario")
+    # atendimentos_realizados_list = relationship("atendimento.atendente_id", backref="atendente")
 
     @property
     def password(self):

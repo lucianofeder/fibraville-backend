@@ -4,8 +4,8 @@ from app.configs.database import db
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True, order=True)
-class FornecedorEnderecoModel(db.Model, BaseServices):
+@dataclass
+class FornecedorEnderecoModel(db.Model):
     id: int
     cep: str
     rua: str

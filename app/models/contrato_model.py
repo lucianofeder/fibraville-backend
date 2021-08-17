@@ -7,8 +7,8 @@ from dataclasses import dataclass
 # from app.models.plano_model import PlanoModel
 
 
-@dataclass(frozen=True, order=True)
-class ContratoModel(db.Model, BaseServices):
+@dataclass
+class ContratoModel(db.Model):
     id: int
     valor: float
     duracao_meses: int

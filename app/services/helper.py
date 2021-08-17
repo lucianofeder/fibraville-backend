@@ -1,6 +1,10 @@
-from flask_restful import current_app
+from app.configs.database import db
 
 class BaseServices():
     def save(self):
-        current_app.session.add(self)
-        current_app.session.commit()
+        db.session.add(self)
+        db.session.commit()
+
+def add_commit(data):
+    db.session.add(data)
+    db.session.commit()

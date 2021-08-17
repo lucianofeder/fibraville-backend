@@ -5,8 +5,8 @@ from app.configs.database import db
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True, order=True)
-class ProdutoFornecedorModel(db.Model, BaseServices):
+@dataclass
+class ProdutoFornecedorModel(db.Model):
     id: int
     produto_id: int
     fornecedor_id: int

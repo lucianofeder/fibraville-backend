@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, String
 from app.services.helper import BaseServices
@@ -6,8 +7,8 @@ from app.configs.database import db
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True, order=True)
-class UsuarioEnderecoModel(db.Model, BaseServices):
+@dataclass
+class UsuarioEnderecoModel(db.Model):
     id: int
     e_comercial: bool
     cep: str
@@ -46,6 +47,7 @@ class UsuarioEnderecoModel(db.Model, BaseServices):
     onu_senha = Column(String(150))
 
     usuario_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
+    contrato = relationship("ContratoUsuarioModel", backref=backref('endereco', uselist=False))
     contrato_usuario_id = Column(Integer, ForeignKey("contrato_usuario.id"))
 
     # def serializer(self):

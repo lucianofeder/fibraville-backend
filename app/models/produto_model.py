@@ -7,8 +7,8 @@ from dataclasses import dataclass
 # from app.models.plano_model import PlanoModel
 
 
-@dataclass(frozen=True, order=True)
-class ProdutoModel(db.Model, BaseServices):
+@dataclass
+class ProdutoModel(db.Model):
     id: int
     modelo: str
     marca: str
@@ -16,7 +16,7 @@ class ProdutoModel(db.Model, BaseServices):
     numero_serie: str
     estoque: float
     velocidade: float
-    planos_list: list #list[PlanoModel]
+    # planos_list: list #list[PlanoModel]
     fornecedores_list: list #list[FornecedorModel]
 
     __tablename__ = "produto"
@@ -30,7 +30,7 @@ class ProdutoModel(db.Model, BaseServices):
     estoque = Column(Float, default=0)
     velocidade = Column(Float, default=False)
 
-    planos_list = relationship("PlanoModel", secondary="plano_produto", backref="produtos_list")
+    # planos_list = relationship("PlanoModel", secondary="plano_produto", backref="produtos_list")
     fornecedores_list = relationship("FornecedorModel", secondary="produto_fornecedor", backref="produtos_list")
 
     # def serializer(self):

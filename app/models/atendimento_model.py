@@ -8,15 +8,15 @@ from dataclasses import dataclass
 from datetime import datetime
 
 
-@dataclass(frozen=True, order=True)
-class AtendimentoModel(db.Model, BaseServices):
+@dataclass
+class AtendimentoModel(db.Model):
     id: int
     data: datetime
     descricao: str
     setor: str
     usuario_cpf: str
     usuario_telefone: str
-    atendente_id: int
+    # atendente_id: int
     usuario_id: int
     ordem_servico_id: int
 
@@ -30,7 +30,7 @@ class AtendimentoModel(db.Model, BaseServices):
     usuario_cpf = Column(String(11))
     usuario_telefone = Column(String(50))
 
-    atendente_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
+    # atendente_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
     usuario_id = Column(Integer, ForeignKey("usuario.id"))
 
     ordem_servico = relationship("OrdemServicoModel", backref=backref('atendimento', uselist=False))

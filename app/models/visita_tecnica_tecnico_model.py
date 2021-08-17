@@ -5,8 +5,8 @@ from app.configs.database import db
 from dataclasses import dataclass
 
 
-@dataclass(frozen=True, order=True)
-class VisitaTecnicaTecnicoModel(db.Model, BaseServices):
+@dataclass
+class VisitaTecnicaTecnicoModel(db.Model):
     id: int
     tecnico_id: int
     visita_tecnica_id: int

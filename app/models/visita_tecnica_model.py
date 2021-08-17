@@ -9,8 +9,8 @@ from dataclasses import dataclass
 # from app.models.usuario_model import UsuarioModel
 
 
-@dataclass(frozen=True, order=True)
-class VisitaTecnicaModel(db.Model, BaseServices):
+@dataclass
+class VisitaTecnicaModel(db.Model):
     id: int
     data_agendamento: datetime
     duracao_estimada: int

@@ -6,22 +6,23 @@ def init_app(app: Flask) -> None:
     api = Api(app)
 
     from app.models.usuario_model import UsuarioModel
-    from app.models.usuario_endereco_model import UsuarioEnderecoModel
-    from app.models.usuario_permissao_model import UsuarioPermissaoModel
     from app.models.plano_model import PlanoModel
-    from app.models.contrato_model import ContratoModel
-    from app.models.contrato_usuario_model import ContratoUsuarioModel
     from app.models.produto_model import ProdutoModel
-    from app.models.produto_fornecedor_model import ProdutoFornecedorModel
+    from app.models.contrato_model import ContratoModel
     from app.models.atendimento_model import AtendimentoModel
     from app.models.ordem_servico_model import OrdemServicoModel
     from app.models.visita_tecnica_model import VisitaTecnicaModel
-    from app.models.visita_tecnica_produto_model import VisitaTecnicaProtudoModel
-    from app.models.visita_tecnica_tecnico_model import VisitaTecnicaTecnicoModel
     from app.models.fornecedor_model import FornecedorModel
-    from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
     from app.models.contas_a_pagar_model import ContasAPagarModel
     from app.models.contas_a_receber_model import ContasAReceberModel
+    from app.models.usuario_endereco_model import UsuarioEnderecoModel
+    from app.models.usuario_permissao_model import UsuarioPermissaoModel
+    from app.models.plano_produto_model import PlanoProdutoModel
+    from app.models.contrato_usuario_model import ContratoUsuarioModel
+    from app.models.produto_fornecedor_model import ProdutoFornecedorModel
+    from app.models.visita_tecnica_produto_model import VisitaTecnicaProtudoModel
+    from app.models.visita_tecnica_tecnico_model import VisitaTecnicaTecnicoModel
+    from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
 
     from app.views.usuario_nao_registrado_view import UsuarioNaoRegistradoResource
     api.add_resource(UsuarioNaoRegistradoResource, "/api/non_registered_user/", endpoint="NONREGISTERED_USER")
