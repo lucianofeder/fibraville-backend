@@ -34,15 +34,15 @@ class FornecedorModel(BaseServices):
     
     contas_a_pagar_list = relationship("ContasAPagarModel", backref="fornecedor")
 
-    def serializer(self):
-        return {
-            "id": self.id,
-            "razao_social": self.razao_social,
-            "nome_fantasia": self.nome_fantasia,
-            "cnpj": self.cnpj,
-            "inscricao_estadual": self.inscricao_estadual,
-            "contato": self.contato,
-            "endereco_fornecedor": self.endereco_fornecedor,
-            "endereco_fornecedor_id": self.endereco_fornecedor_id,
-            "contas_a_pagar_list": self.contas_a_pagar_list
-        }
+    # def serializer(self):
+    #     return {
+    #         "id": self.id,
+    #         "razao_social": self.razao_social,
+    #         "nome_fantasia": self.nome_fantasia,
+    #         "cnpj": self.cnpj,
+    #         "inscricao_estadual": self.inscricao_estadual,
+    #         "contato": self.contato,
+    #         "endereco_fornecedor": self.endereco_fornecedor,
+    #         "endereco_fornecedor_id": self.endereco_fornecedor_id,
+    #         "contas_a_pagar_list": self.contas_a_pagar_list
+    #     }
