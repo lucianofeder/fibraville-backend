@@ -35,7 +35,6 @@ class UsuarioNaoRegistradoModel(db.Model, BaseServices):
     cidade = Column(String(150))
     estado = Column(String(150))
 
-
     # def serializer(self):
     #     return {
     #         "nome": self.nome,
