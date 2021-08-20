@@ -19,5 +19,4 @@ class UsuarioNaoRegistradoResource(Resource):
         data, status = create_usuario()
         response = data
         response.status_code = status
-        
         return response
