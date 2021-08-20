@@ -7,7 +7,7 @@ from app.services.helper import add_commit
 
 
 @dataclass
-class UsuarioNaoRegistradoModel(db.Model):
+class UsuarioNaoRegistradoModel(db.Model, BaseServices):
     id: int
     nome: str
     telefone: str

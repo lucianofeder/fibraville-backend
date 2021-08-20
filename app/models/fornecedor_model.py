@@ -9,7 +9,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class FornecedorModel(db.Model):
+class FornecedorModel(db.Model, BaseServices):
     id: int
     razao_social: str
     nome_fantasia: str

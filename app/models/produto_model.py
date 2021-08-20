@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ProdutoModel(db.Model):
+class ProdutoModel(db.Model, BaseServices):
     id: int
     modelo: str
     marca: str

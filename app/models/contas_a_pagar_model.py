@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ContasAPagarModel(db.Model):
+class ContasAPagarModel(db.Model, BaseServices):
     id: int
     valor: float
     data_digitado: datetime

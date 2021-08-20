@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class VisitaTecnicaTecnicoModel(db.Model):
+class VisitaTecnicaTecnicoModel(db.Model, BaseServices):
     id: int
     tecnico_id: int
     visita_tecnica_id: int
