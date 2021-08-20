@@ -8,10 +8,10 @@ from dataclasses import dataclass
 
 
 @dataclass
-class PlanoModel(db.Model):
+class PlanoModel(db.Model, BaseServices):
     id: int
     valor: float
-    velocidade: float
+    velocidade: int
     produtos_list: list #list[ProdutoModel]
 
     __tablename__ = "plano"
@@ -19,7 +19,7 @@ class PlanoModel(db.Model):
     id = Column(Integer, primary_key=True)
 
     valor = Column(Float, nullable=False)
-    velocidade = Column(Float, default=False)
+    velocidade = Column(Integer)
 
     produtos_list = relationship("ProdutoModel", secondary="plano_produto", backref="planos_list")
 

@@ -6,7 +6,6 @@ def init_app(app: Flask) -> None:
     api = Api(app)
 
     from app.models.usuario_model import UsuarioModel
-    from app.models.plano_model import PlanoModel
     from app.models.produto_model import ProdutoModel
     from app.models.contrato_model import ContratoModel
     from app.models.atendimento_model import AtendimentoModel
@@ -25,4 +24,8 @@ def init_app(app: Flask) -> None:
     from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
 
     from app.views.usuario_nao_registrado_view import UsuarioNaoRegistradoResource
-    api.add_resource(UsuarioNaoRegistradoResource, "/api/non_registered_user/", endpoint="NONREGISTERED_USER")
+    api.add_resource(UsuarioNaoRegistradoResource, "/api/usuario_nao_registrado/", endpoint="USUARIOS_NAOREGISTRADO")
+
+    from app.views.plano_view import PlanoResource, PlanoRetrieveResource
+    api.add_resource(PlanoResource, "/api/plano/", endpoint="PLANOS")
+    api.add_resource(PlanoRetrieveResource, "/api/plano/<int:plano_id>/", endpoint="PLANO_ID")
