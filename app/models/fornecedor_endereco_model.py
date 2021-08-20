@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class FornecedorEnderecoModel(db.Model):
+class FornecedorEnderecoModel(db.Model, BaseServices):
     id: int
     cep: str
     rua: str

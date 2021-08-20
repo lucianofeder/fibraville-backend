@@ -9,7 +9,7 @@ from datetime import datetime
 
 
 @dataclass
-class AtendimentoModel(db.Model):
+class AtendimentoModel(db.Model, BaseServices):
     id: int
     data: datetime
     descricao: str

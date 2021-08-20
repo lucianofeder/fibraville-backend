@@ -17,7 +17,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class UsuarioModel(db.Model):
+class UsuarioModel(db.Model, BaseServices):
     id: int
     nome: str
     sobrenome: str

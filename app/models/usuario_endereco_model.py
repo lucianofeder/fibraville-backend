@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class UsuarioEnderecoModel(db.Model):
+class UsuarioEnderecoModel(db.Model, BaseServices):
     id: int
     e_comercial: bool
     cep: str
