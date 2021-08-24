@@ -7,7 +7,6 @@ def init_app(app: Flask) -> None:
 
     from app.models.usuario_model import UsuarioModel
     from app.models.produto_model import ProdutoModel
-    from app.models.atendimento_model import AtendimentoModel
     from app.models.ordem_servico_model import OrdemServicoModel
     from app.models.visita_tecnica_model import VisitaTecnicaModel
     from app.models.fornecedor_model import FornecedorModel
@@ -49,3 +48,8 @@ def init_app(app: Flask) -> None:
     from app.views.contrato_view import ContratoResource, ContratoRetrieveResource
     api.add_resource(ContratoResource, "/api/v1/contrato/", endpoint="CONTRATOS")
     api.add_resource(ContratoRetrieveResource, "/api/v1/contrato/<int:contrato_id>/")
+
+    from app.views.atendimento_view import AtendimentoResource, AtendimentoRetrieveResource, AtendimentoByUsuarioResource
+    api.add_resource(AtendimentoResource, "/api/v1/atendimento/", endpoint="ATENDIMENTOS")
+    api.add_resource(AtendimentoRetrieveResource, "/api/v1/atendimento/<int:atendimento_id>/", endpoint="ATENDIMENTO_ID")
+    api.add_resource(AtendimentoByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/atendimento/", endpoint="USUARIO_ID_ATENDIMENTO")
