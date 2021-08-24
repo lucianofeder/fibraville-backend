@@ -7,12 +7,10 @@ def init_app(app: Flask) -> None:
 
     from app.models.usuario_model import UsuarioModel
     from app.models.produto_model import ProdutoModel
-    from app.models.contrato_model import ContratoModel
     from app.models.atendimento_model import AtendimentoModel
     from app.models.ordem_servico_model import OrdemServicoModel
     from app.models.visita_tecnica_model import VisitaTecnicaModel
     from app.models.fornecedor_model import FornecedorModel
-    from app.models.contas_a_receber_model import ContasAReceberModel
     from app.models.plano_produto_model import PlanoProdutoModel
     from app.models.contrato_usuario_model import ContratoUsuarioModel
     from app.models.produto_fornecedor_model import ProdutoFornecedorModel
@@ -38,13 +36,16 @@ def init_app(app: Flask) -> None:
 
     from app.views.contas_a_pagar_view import ContasAPagarResource, ContasAPagarRetrieveResource, ContasAPagarPayBillResource,ContasAPagarByFornecedorResource
     api.add_resource(ContasAPagarResource, "/api/v1/contas_a_pagar/", endpoint="CONTAS_A_PAGAR")
-    api.add_resource(ContasAPagarPayBillResource, "/api/v1/contas_a_pagar/<int:conta_id>/pay_bill/", endpoint="PAYBILL")
+    api.add_resource(ContasAPagarPayBillResource, "/api/v1/contas_a_pagar/<int:conta_id>/pay_bill/", endpoint="CONTASAPAGAR_PAYBILL")
     api.add_resource(ContasAPagarRetrieveResource, "/api/v1/contas_a_pagar/<int:conta_id>/", endpoint="CONTASAPAGAR_ID")
     api.add_resource(ContasAPagarByFornecedorResource, "/api/v1/fornecedor/<int:fornecedor_id>/contas_a_pagar/", endpoint="FORNECEDOR_ID_CONTASAPAGAR")
 
     from app.views.contas_a_receber_view import ContasAReceberResource, ContasAReceberRetrieveResource, ContasAReceberPayBillResource, ContasAReceberByUsuarioResource
-    api.add_resource(ContasAReceberResource, "/api/v1/contas_a_Receber/", endpoint="CONTAS_A_Receber")
-    api.add_resource(ContasAReceberPayBillResource, "/api/v1/contas_a_Receber/<int:conta_id>/pay_bill/", endpoint="PAYBILL")
-    api.add_resource(ContasAReceberRetrieveResource, "/api/v1/contas_a_Receber/<int:conta_id>/", endpoint="CONTASARECEBER_ID")
+    api.add_resource(ContasAReceberResource, "/api/v1/contas_a_receber/", endpoint="CONTAS_A_RECEBER")
+    api.add_resource(ContasAReceberPayBillResource, "/api/v1/contas_a_receber/<int:conta_id>/pay_bill/", endpoint="CONTASARECEBER_PAYBILL")
+    api.add_resource(ContasAReceberRetrieveResource, "/api/v1/contas_a_receber/<int:conta_id>/", endpoint="CONTASARECEBER_ID")
     api.add_resource(ContasAReceberByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/contas_a_receber/", endpoint="USUARIO_ID_CONTASARECEBER")
     
+    from app.views.contrato_view import ContratoResource, ContratoRetrieveResource
+    api.add_resource(ContratoResource, "/api/v1/contrato/", endpoint="CONTRATOS")
+    api.add_resource(ContratoRetrieveResource, "/api/v1/contrato/<int:contrato_id>/")

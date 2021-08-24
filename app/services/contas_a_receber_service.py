@@ -1,4 +1,4 @@
-from app.models.contas_a_pagar_model import ContasAReceberModel
+from app.models.contas_a_receber_model import ContasAReceberModel
 from app.models.usuario_model import UsuarioModel
 from app.exc import DataNotFound
 from flask_restful import reqparse
@@ -6,7 +6,7 @@ from flask import jsonify
 from http import HTTPStatus
 from datetime import datetime, date
 
-class ContasAPagarService:
+class ContasAReceberService:
 
     @staticmethod
     def get_all():
