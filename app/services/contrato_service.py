@@ -53,12 +53,12 @@ class ContratoService:
 
         data = parser.parse_args(strict=True)
 
-        conta = ContratoModel.query.get(contrato_id)
+        contrato = ContratoModel.query.get(contrato_id)
         for key, value in data.items():
-            setattr(conta, key, value)
+            setattr(contrato, key, value)
         
-        conta.save()
-        return conta
+        contrato.save()
+        return contrato
 
     
     @staticmethod
