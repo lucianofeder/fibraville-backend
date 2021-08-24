@@ -12,7 +12,6 @@ def init_app(app: Flask) -> None:
     from app.models.ordem_servico_model import OrdemServicoModel
     from app.models.visita_tecnica_model import VisitaTecnicaModel
     from app.models.fornecedor_model import FornecedorModel
-    from app.models.contas_a_pagar_model import ContasAPagarModel
     from app.models.contas_a_receber_model import ContasAReceberModel
     from app.models.plano_produto_model import PlanoProdutoModel
     from app.models.contrato_usuario_model import ContratoUsuarioModel
@@ -36,3 +35,9 @@ def init_app(app: Flask) -> None:
     api.add_resource(UsuarioEnderecoResource, "/api/usuario_endereco/", endpoint="USUARIOS_ENDERECOS")
     api.add_resource(UsuarioEnderecoRetrieveResource, "/api/usuario_endereco/<int:endereco_id>/", endpoint="USUARIOENDERECO_ID")
     api.add_resource(UsuarioEnderecoByUserResource, "/api/usuario/<int:usuario_id>/usuario_endereco/", endpoint="USUARIO_ID_USUARIOENDERECO")
+
+    from app.views.contas_a_pagar_view import ContasAPagarResource, ContasAPagarRetrieveResource, ContasAPagarPayBillResource,ContasAPagarByFornecedorResource
+    api.add_resource(ContasAPagarResource, "/api/contas_a_pagar/", endpoint="CONTAS_A_PAGAR")
+    api.add_resource(ContasAPagarPayBillResource, "/api/contas_a_pagar/<int:conta_id>/pay_bill/", endpoint="PAYBILL")
+    api.add_resource(ContasAPagarRetrieveResource, "/api/contas_a_pagar/<int:conta_id>/", endpoint="CONTASAPAGAR_ID")
+    api.add_resource(ContasAPagarByFornecedorResource, "/api/fornecedor/<int:fornecedor_id>/contas_a_pagar/", endpoint="FORNECEDOR_ID_CONTASAPAGAR")
