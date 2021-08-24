@@ -23,7 +23,7 @@ class ContasAPagarModel(db.Model, BaseServices):
     id = Column(Integer, primary_key=True)
 
     valor = Column(Float, nullable=False)
-    data_digitado = Column(DateTime, default=datetime.now())
+    data_digitado = Column(DateTime, default=datetime.utcnow())
     data_emissao = Column(DateTime, nullable=False)
     data_a_pagar = Column(Date, nullable=False)
     nfe = Column(String(150))
