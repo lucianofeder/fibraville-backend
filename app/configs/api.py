@@ -21,23 +21,30 @@ def init_app(app: Flask) -> None:
     from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
 
     from app.views.usuario_nao_registrado_view import UsuarioNaoRegistradoResource
-    api.add_resource(UsuarioNaoRegistradoResource, "/api/usuario_nao_registrado/", endpoint="USUARIOS_NAOREGISTRADO")
+    api.add_resource(UsuarioNaoRegistradoResource, "/api/v1/usuario_nao_registrado/", endpoint="USUARIOS_NAOREGISTRADO")
 
     from app.views.plano_view import PlanoResource, PlanoRetrieveResource
-    api.add_resource(PlanoResource, "/api/plano/", endpoint="PLANOS")
-    api.add_resource(PlanoRetrieveResource, "/api/plano/<int:plano_id>/", endpoint="PLANO_ID")
+    api.add_resource(PlanoResource, "/api/v1/plano/", endpoint="PLANOS")
+    api.add_resource(PlanoRetrieveResource, "/api/v1/plano/<int:plano_id>/", endpoint="PLANO_ID")
 
     from app.views.usuario_permissao_view import UsuarioPermissaoResource, UsuarioPermissaoRetrieveResource
-    api.add_resource(UsuarioPermissaoResource, "/api/usuario_permissao/", endpoint="USUARIOS_PERMISSAO")
-    api.add_resource(UsuarioPermissaoRetrieveResource, "/api/usuario/<int:usuario_id>/usuario_permissao/", endpoint="USUARIO_PERMISSAO_ID")
+    api.add_resource(UsuarioPermissaoResource, "/api/v1/usuario_permissao/", endpoint="USUARIOS_PERMISSAO")
+    api.add_resource(UsuarioPermissaoRetrieveResource, "/api/v1/usuario/<int:usuario_id>/usuario_permissao/", endpoint="USUARIO_PERMISSAO_ID")
 
     from app.views.usuario_endereco_view import UsuarioEnderecoResource, UsuarioEnderecoRetrieveResource, UsuarioEnderecoByUserResource
-    api.add_resource(UsuarioEnderecoResource, "/api/usuario_endereco/", endpoint="USUARIOS_ENDERECOS")
-    api.add_resource(UsuarioEnderecoRetrieveResource, "/api/usuario_endereco/<int:endereco_id>/", endpoint="USUARIOENDERECO_ID")
-    api.add_resource(UsuarioEnderecoByUserResource, "/api/usuario/<int:usuario_id>/usuario_endereco/", endpoint="USUARIO_ID_USUARIOENDERECO")
+    api.add_resource(UsuarioEnderecoResource, "/api/v1/usuario_endereco/", endpoint="USUARIOS_ENDERECOS")
+    api.add_resource(UsuarioEnderecoRetrieveResource, "/api/v1/usuario_endereco/<int:endereco_id>/", endpoint="USUARIOENDERECO_ID")
+    api.add_resource(UsuarioEnderecoByUserResource, "/api/v1/usuario/<int:usuario_id>/usuario_endereco/", endpoint="USUARIO_ID_USUARIOENDERECO")
 
     from app.views.contas_a_pagar_view import ContasAPagarResource, ContasAPagarRetrieveResource, ContasAPagarPayBillResource,ContasAPagarByFornecedorResource
-    api.add_resource(ContasAPagarResource, "/api/contas_a_pagar/", endpoint="CONTAS_A_PAGAR")
-    api.add_resource(ContasAPagarPayBillResource, "/api/contas_a_pagar/<int:conta_id>/pay_bill/", endpoint="PAYBILL")
-    api.add_resource(ContasAPagarRetrieveResource, "/api/contas_a_pagar/<int:conta_id>/", endpoint="CONTASAPAGAR_ID")
-    api.add_resource(ContasAPagarByFornecedorResource, "/api/fornecedor/<int:fornecedor_id>/contas_a_pagar/", endpoint="FORNECEDOR_ID_CONTASAPAGAR")
+    api.add_resource(ContasAPagarResource, "/api/v1/contas_a_pagar/", endpoint="CONTAS_A_PAGAR")
+    api.add_resource(ContasAPagarPayBillResource, "/api/v1/contas_a_pagar/<int:conta_id>/pay_bill/", endpoint="PAYBILL")
+    api.add_resource(ContasAPagarRetrieveResource, "/api/v1/contas_a_pagar/<int:conta_id>/", endpoint="CONTASAPAGAR_ID")
+    api.add_resource(ContasAPagarByFornecedorResource, "/api/v1/fornecedor/<int:fornecedor_id>/contas_a_pagar/", endpoint="FORNECEDOR_ID_CONTASAPAGAR")
+
+    from app.views.contas_a_receber_view import ContasAReceberResource, ContasAReceberRetrieveResource, ContasAReceberPayBillResource, ContasAReceberByUsuarioResource
+    api.add_resource(ContasAReceberResource, "/api/v1/contas_a_Receber/", endpoint="CONTAS_A_Receber")
+    api.add_resource(ContasAReceberPayBillResource, "/api/v1/contas_a_Receber/<int:conta_id>/pay_bill/", endpoint="PAYBILL")
+    api.add_resource(ContasAReceberRetrieveResource, "/api/v1/contas_a_Receber/<int:conta_id>/", endpoint="CONTASARECEBER_ID")
+    api.add_resource(ContasAReceberByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/contas_a_receber/", endpoint="USUARIO_ID_CONTASARECEBER")
+    

@@ -4,14 +4,14 @@ from sqlalchemy.sql.sqltypes import Boolean, Date, DateTime, Float
 from app.services.helper import BaseServices
 from app.configs.database import db
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, date
 
 
 @dataclass
 class ContasAReceberModel(db.Model, BaseServices):
     id: int
     valor: float
-    data_a_pagar: datetime
+    data_a_pagar: date
     data_pago: datetime
     usuario_id: int
     pago: bool = False

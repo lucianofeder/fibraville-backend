@@ -1,5 +1,6 @@
 from app.models.contas_a_pagar_model import ContasAPagarModel
-from app.models.contas_a_pagar_model import ContasAPagarModel
+from app.models.fornecedor_model import FornecedorModel
+from app.exc import DataNotFound
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
@@ -9,8 +10,8 @@ class ContasAPagarService:
 
     @staticmethod
     def get_all():
-        enderecos = ContasAPagarModel.query.all()
-        return jsonify(enderecos), HTTPStatus.OK 
+        contas = ContasAPagarModel.query.all()
+        return jsonify(contas), HTTPStatus.OK 
 
     @staticmethod
     def get_by_id(conta_id) -> ContasAPagarModel:
@@ -24,12 +25,12 @@ class ContasAPagarService:
         
         parser = reqparse.RequestParser()
 
-        parser.add_argument("valor", type=str, required=True)
-        parser.add_argument("data_emissao", type=datetime, required=True)
-        parser.add_argument("data_a_pagar", type=date, required=True)
+        parser.add_argument("valor", type=float)
+        parser.add_argument("data_emissao", type=datetime)
+        parser.add_argument("data_a_pagar", type=date)
         parser.add_argument("nfe", type=str)
         parser.add_argument("n_documento", type=str)
-        parser.add_argument("pago", type=bool, default=False)
+        parser.add_argument("pago", type=bool)
 
         data = parser.parse_args(strict=True)
 
@@ -69,9 +70,14 @@ class ContasAPagarService:
 
     @staticmethod
     def create(fornecedor_id) -> ContasAPagarModel:
+        fornecedor = FornecedorModel.query.get(fornecedor_id)
+        
+        if not fornecedor:
+            raise DataNotFound('Fornecedor')
+
         parser = reqparse.RequestParser()
 
-        parser.add_argument("valor", type=str, required=True)
+        parser.add_argument("valor", type=float, required=True)
         parser.add_argument("data_digitado", type=datetime, default=datetime.utcnow())
         parser.add_argument("data_emissao", type=datetime, required=True)
         parser.add_argument("data_a_pagar", type=date, required=True)
