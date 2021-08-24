@@ -1,3 +1,5 @@
+from http import HTTPStatus
+from app.exc import DataNotFound
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 
@@ -37,6 +39,7 @@ class ContasAPagarPayBillResource(Resource):
     # @jwt_required()
     def put(self, conta_id):
         response, response.status_code = ContasAPagarService.pay_bill(conta_id)
+        return response
 
 
 class ContasAPagarByFornecedorResource(Resource):
@@ -48,7 +51,9 @@ class ContasAPagarByFornecedorResource(Resource):
 
     # @jwt_required()
     def post(self, fornecedor_id):
-        response, response.status_code = ContasAPagarService.create(fornecedor_id)
-        return response
-
+        try:
+            response, response.status_code = ContasAPagarService.create(fornecedor_id)
+            return response
+        except DataNotFound as e:
+            return e.message, HTTPStatus.NOT_FOUND
 
