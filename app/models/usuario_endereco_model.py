@@ -34,7 +34,7 @@ class UsuarioEnderecoModel(db.Model, BaseServices):
     e_comercial = Column(Boolean, default=False)
     cep = Column(String(8), nullable=False)
     rua = Column(String(150))
-    numero = Column(Integer)
+    numero = Column(String(150), default='SN')
     complemento = Column(String(255))
     bairro = Column(String(150))
     cidade = Column(String(150))
