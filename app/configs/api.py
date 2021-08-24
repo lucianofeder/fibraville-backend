@@ -14,8 +14,6 @@ def init_app(app: Flask) -> None:
     from app.models.fornecedor_model import FornecedorModel
     from app.models.contas_a_pagar_model import ContasAPagarModel
     from app.models.contas_a_receber_model import ContasAReceberModel
-    from app.models.usuario_endereco_model import UsuarioEnderecoModel
-    from app.models.usuario_permissao_model import UsuarioPermissaoModel
     from app.models.plano_produto_model import PlanoProdutoModel
     from app.models.contrato_usuario_model import ContratoUsuarioModel
     from app.models.produto_fornecedor_model import ProdutoFornecedorModel
@@ -31,5 +29,10 @@ def init_app(app: Flask) -> None:
     api.add_resource(PlanoRetrieveResource, "/api/plano/<int:plano_id>/", endpoint="PLANO_ID")
 
     from app.views.usuario_permissao_view import UsuarioPermissaoResource, UsuarioPermissaoRetrieveResource
-    api.add_resource(UsuarioPermissaoResource, "/api/usuario_permissa/", endpoint="USUARIOS_PERMISSAO")
-    api.add_resource(UsuarioPermissaoRetrieveResource, "/api/usuario_permissao/<int:usuario_id>/", endpoint="USUARIO_PERMISSAO_ID")
+    api.add_resource(UsuarioPermissaoResource, "/api/usuario_permissao/", endpoint="USUARIOS_PERMISSAO")
+    api.add_resource(UsuarioPermissaoRetrieveResource, "/api/usuario/<int:usuario_id>/usuario_permissao/", endpoint="USUARIO_PERMISSAO_ID")
+
+    from app.views.usuario_endereco_view import UsuarioEnderecoResource, UsuarioEnderecoRetrieveResource, UsuarioEnderecoByUserResource
+    api.add_resource(UsuarioEnderecoResource, "/api/usuario_endereco/", endpoint="USUARIOS_ENDERECOS")
+    api.add_resource(UsuarioEnderecoRetrieveResource, "/api/usuario_endereco/<int:endereco_id>/", endpoint="USUARIOENDERECO_ID")
+    api.add_resource(UsuarioEnderecoByUserResource, "/api/usuario/<int:usuario_id>/usuario_endereco/", endpoint="USUARIO_ID_USUARIOENDERECO")
