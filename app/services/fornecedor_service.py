@@ -14,9 +14,9 @@ class FornecedorService:
 
     @staticmethod
     def get_by_id(fornecedor_id) -> FornecedorModel:
-        os = FornecedorModel.query.get(fornecedor_id)
-        if os:
-            return jsonify(os), HTTPStatus.OK
+        fornecedor = FornecedorModel.query.get(fornecedor_id)
+        if fornecedor:
+            return jsonify(fornecedor), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
 
 

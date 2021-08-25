@@ -61,13 +61,19 @@ def init_app(app: Flask) -> None:
     api.add_resource(AtendimentoRetrieveResource, "/api/v1/atendimento/<int:atendimento_id>/", endpoint="ATENDIMENTO_ID")
     api.add_resource(AtendimentoByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/atendimento/", endpoint="USUARIO_ID_ATENDIMENTO")
 
+
     from app.views.ordem_servico_view import OrdemServicoResource, OrdemServicoRetrieveResource, OrdemServicoByUsuarioResource
     api.add_resource(OrdemServicoResource, "/api/v1/ordem_servico/", endpoint="ORDENS_SERVICO")
     api.add_resource(OrdemServicoRetrieveResource, "/api/v1/ordem_servico/<int:os_id>/", endpoint="OS_ID")
     api.add_resource(OrdemServicoByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/ordem_servico/", endpoint="USUARIO_ID_OS")
+
 
     from app.views.fornecedor_view import FornecedorResource, FornecedorRetrieveResource
     api.add_resource(FornecedorResource, "/api/v1/fornecedor/", endpoint="FORNECEDORES")
     api.add_resource(FornecedorRetrieveResource, "/api/v1/fornecedor/<int:fornecedor_id>/", endpoint="FORNECEDOR_ID")
 
     
+    from app.views.fornecedor_endereco_view import FornecedorEnderecoResource, FornecedorEnderecoRetrieveResource, FornecedorEnderecoByFornecedorResource
+    api.add_resource(FornecedorEnderecoResource, "/api/v1/fornecedor/endereco/", endpoint="FORNECEDORES_ENDERECO")
+    api.add_resource(FornecedorEnderecoRetrieveResource, "/api/v1/fornecedor/endereco/<int:endereco_id>/", endpoint="FORNECEDOR_ENDERECO_ID")
+    api.add_resource(FornecedorEnderecoByFornecedorResource, "/api/v1/fornecedor/<int:fornecedor_id>/endereco/", endpoint="FORNECEDORENDERECO_BY_FORNECEDOR")
