@@ -62,6 +62,6 @@ def init_app(app: Flask) -> None:
     api.add_resource(AtendimentoByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/atendimento/", endpoint="USUARIO_ID_ATENDIMENTO")
 
     from app.views.ordem_servico_view import OrdemServicoResource, OrdemServicoRetrieveResource, OrdemServicoByUsuarioResource
-    api.add_resource(AtendimentoResource, "/api/v1/ordem_servico/", endpoint="ORDENS_SERVICO")
-    api.add_resource(AtendimentoRetrieveResource, "/api/v1/ordem_servico/<int:os_id>/", endpoint="OS_ID")
-    api.add_resource(AtendimentoByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/ordem_servico/", endpoint="USUARIO_ID_OS")
+    api.add_resource(OrdemServicoResource, "/api/v1/ordem_servico/", endpoint="ORDENS_SERVICO")
+    api.add_resource(OrdemServicoRetrieveResource, "/api/v1/ordem_servico/<int:os_id>/", endpoint="OS_ID")
+    api.add_resource(OrdemServicoByUsuarioResource, "/api/v1/usuario/<int:usuario_id>/ordem_servico/", endpoint="USUARIO_ID_OS")
