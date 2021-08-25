@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
-from sqlalchemy.sql.sqltypes import DateTime, Float, String
+from sqlalchemy.sql.sqltypes import Boolean, DateTime, Float, String
 from app.services.helper import BaseServices
 from app.configs.database import db
 from datetime import datetime
@@ -19,16 +19,18 @@ class OrdemServicoModel(db.Model, BaseServices):
     descricao: str
     usuario_id: int
     visitas_tecnicas_list: list #list[VisitaTecnicaModel]
+    finalizado: bool
 
     __tablename__ = "ordem_servico"
 
     id = Column(Integer, primary_key=True)
 
-    data_abertura = Column(DateTime, default=datetime.now())
+    data_abertura = Column(DateTime, default=datetime.utcnow())
     data_fechamento = Column(DateTime)
-    valor = Column(Float, nullable=False)
+    valor = Column(Float, default=0)
     proposito = Column(String(511))
     descricao = Column(String(511))
+    finalizado = Column(Boolean, default=False)
 
     usuario_id = Column(Integer, ForeignKey("usuario.id"), nullable=False)
 
