@@ -6,9 +6,7 @@ def init_app(app: Flask) -> None:
     api = Api(app)
 
     from app.models.usuario_model import UsuarioModel
-    from app.models.produto_model import ProdutoModel
     from app.models.visita_tecnica_model import VisitaTecnicaModel
-    from app.models.fornecedor_model import FornecedorModel
     from app.models.plano_produto_model import PlanoProdutoModel
     from app.models.contrato_usuario_model import ContratoUsuarioModel
     from app.models.produto_fornecedor_model import ProdutoFornecedorModel
@@ -77,3 +75,9 @@ def init_app(app: Flask) -> None:
     api.add_resource(FornecedorEnderecoResource, "/api/v1/fornecedor/endereco/", endpoint="FORNECEDORES_ENDERECO")
     api.add_resource(FornecedorEnderecoRetrieveResource, "/api/v1/fornecedor/endereco/<int:endereco_id>/", endpoint="FORNECEDOR_ENDERECO_ID")
     api.add_resource(FornecedorEnderecoByFornecedorResource, "/api/v1/fornecedor/<int:fornecedor_id>/endereco/", endpoint="FORNECEDORENDERECO_BY_FORNECEDOR")
+
+
+    from app.views.produto_view import ProdutoResource, ProdutoRetrieveResource, ProdutoByFornecedorResource
+    api.add_resource(ProdutoResource, "/api/v1/produto/", endpoint="PRODUTOS")
+    api.add_resource(ProdutoRetrieveResource, "/api/v1/produto/<int:produto_id>/", endpoint="PRODUTO_ID")
+    api.add_resource(ProdutoByFornecedorResource, "/api/v1/fornecedor/<int:fornecedor_id>/produto/")
