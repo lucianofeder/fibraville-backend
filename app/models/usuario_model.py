@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
 from datetime import datetime
 from dataclasses import dataclass
-# from app.models.usuario_permissao_model import UsuarioPermissaoModel
+from app.models.usuario_permissao_model import UsuarioPermissaoModel
 # from app.models.usuario_endereco_model import UsuarioEnderecoModel
 # from app.models.contas_a_receber_model import ContasAReceberModel
 # from app.models.ordem_servico_model import OrdemServicoModel
@@ -34,13 +34,12 @@ class UsuarioModel(db.Model, BaseServices):
     ultimo_login: datetime
     salt: str
     usuario_permissao_id: int
-    # usuario_permissao: UsuarioPermissaoModel
+    usuario_permissao: UsuarioPermissaoModel
     usuario_endereco_list: list #list[UsuarioEnderecoModel]
     contas_list: list #list[ContasAReceberModel]
     ordens_servicos_list: list #list[OrdemServicoModel]
     atendimentos_recebidos_list: list #list[AtendimentoModel]
     # atendimentos_realizados_list: list #list[AtendimentoModel]
-    # contratos_list: list #list[ContratoModel]
 
 
     __tablename__ = "usuario"
@@ -52,7 +51,7 @@ class UsuarioModel(db.Model, BaseServices):
     password_hash = Column(String(511), nullable=False)
     email = Column(String(150), nullable=False)
     data_nascimento = Column(Date)
-    data_regristro = Column(DateTime, default=datetime.now())
+    data_regristro = Column(DateTime, default=datetime.utcnow())
     e_pessoa_fisica = Column(Boolean, default=True)
     cpf = Column(String(11))
     cnpj = Column(String(14))
