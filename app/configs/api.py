@@ -5,14 +5,9 @@ from flask_restful import Api
 def init_app(app: Flask) -> None:
     api = Api(app)
 
-    from app.models.usuario_model import UsuarioModel
     from app.models.visita_tecnica_model import VisitaTecnicaModel
-    from app.models.plano_produto_model import PlanoProdutoModel
-    from app.models.contrato_usuario_model import ContratoUsuarioModel
-    from app.models.produto_fornecedor_model import ProdutoFornecedorModel
     from app.models.visita_tecnica_produto_model import VisitaTecnicaProtudoModel
     from app.models.visita_tecnica_tecnico_model import VisitaTecnicaTecnicoModel
-    from app.models.fornecedor_endereco_model import FornecedorEnderecoModel
 
 
     from app.views.usuario_nao_registrado_view import UsuarioNaoRegistradoResource
@@ -81,3 +76,9 @@ def init_app(app: Flask) -> None:
     api.add_resource(ProdutoResource, "/api/v1/produto/", endpoint="PRODUTOS")
     api.add_resource(ProdutoRetrieveResource, "/api/v1/produto/<int:produto_id>/", endpoint="PRODUTO_ID")
     api.add_resource(ProdutoByFornecedorResource, "/api/v1/fornecedor/<int:fornecedor_id>/produto/")
+
+
+    from app.views.usuario_view import UsuarioResource, UsuarioRetrieveResource, UsuarioLoginResource
+    api.add_resource(UsuarioResource, "/api/v1/usuario/", endpoint="USUARIOS")
+    api.add_resource(UsuarioRetrieveResource, "/api/v1/usuario/<int:usuario_id>/")
+    api.add_resource(UsuarioLoginResource, "/api/v1/login/", endpoint="LOGIN")
