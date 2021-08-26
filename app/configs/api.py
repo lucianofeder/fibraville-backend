@@ -82,5 +82,5 @@ def init_app(app: Flask) -> None:
 
     from app.views.visita_tecnica_view import VisitaTecnicaResource, VisitaTecnicaRetrieveResource
     api.add_resource(VisitaTecnicaResource, "/api/v1/visita_tecnica/", endpoint="VISITAS_TECNICAS")
-    api.add_resource(VisitaTecnicaRetrieveResource, "/api/v1/visita_tecnica/<int:visita_tecnica>/", endpoint="VISITA_TECNICA_ID")
+    api.add_resource(VisitaTecnicaRetrieveResource, "/api/v1/visita_tecnica/<int:visita_tecnica_id>/", endpoint="VISITA_TECNICA_ID")
     
