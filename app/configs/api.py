@@ -80,5 +80,11 @@ def init_app(app: Flask) -> None:
 
     from app.views.usuario_view import UsuarioResource, UsuarioRetrieveResource, UsuarioLoginResource
     api.add_resource(UsuarioResource, "/api/v1/usuario/", endpoint="USUARIOS")
-    api.add_resource(UsuarioRetrieveResource, "/api/v1/usuario/<int:usuario_id>/")
+    api.add_resource(UsuarioRetrieveResource, "/api/v1/usuario/<int:usuario_id>/", endpoint="USUARIO_ID")
     api.add_resource(UsuarioLoginResource, "/api/v1/login/", endpoint="LOGIN")
+
+
+    from app.views.visita_tecnica_view import VisitaTecnicaResource, VisitaTecnicaRetrieveResource
+    api.add_resource(VisitaTecnicaResource, "/api/v1/visita_tecnica/", endpoint="VISITAS_TECNICAS")
+    api.add_resource(VisitaTecnicaRetrieveResource, "/api/v1/visita_tecnica/<int:visita_tecnica>/", endpoint="VISITA_TECNICA_ID")
+    
