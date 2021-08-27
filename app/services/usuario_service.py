@@ -63,29 +63,25 @@ class UsuarioService:
         
         parser = reqparse.RequestParser()
 
-        parser.add_argument("nome", type=str)
-        parser.add_argument("sobrenome", type=str)
-        parser.add_argument("password", type=str)
-        parser.add_argument("email", type=str)
-        parser.add_argument("data_nascimento", type=datetime)
-        parser.add_argument("e_pessoa_fisica", type=bool)
-        parser.add_argument("cpf", type=str)
-        parser.add_argument("cnpj", type=str)
-        parser.add_argument("mae_nome", type=str)
-        parser.add_argument("pai_nome", type=str)
-        parser.add_argument("observacao", type=str)
+        parser.add_argument("nome", type=str, store_missing=False)
+        parser.add_argument("sobrenome", type=str, store_missing=False)
+        parser.add_argument("password", type=str, store_missing=False)
+        parser.add_argument("email", type=str, store_missing=False)
+        parser.add_argument("data_nascimento", type=datetime, store_missing=False)
+        parser.add_argument("e_pessoa_fisica", type=bool, store_missing=False)
+        parser.add_argument("cpf", type=str, store_missing=False)
+        parser.add_argument("cnpj", type=str, store_missing=False)
+        parser.add_argument("mae_nome", type=str, store_missing=False)
+        parser.add_argument("pai_nome", type=str, store_missing=False)
+        parser.add_argument("observacao", type=str, store_missing=False)
 
-        data = parser.parse_args(strict=True)
-        
+        data = parser.parse_args()
         usuario = UsuarioModel.query.get(usuario_id)
         if not usuario:
             raise DataNotFound('Usuario')
-        
-        ipdb.set_trace()
-        
+                
         for key, value in data.items():
-            if value:
-                setattr(usuario, key, value)
+            setattr(usuario, key, value)
         
         usuario.save()
         return jsonify(usuario)
