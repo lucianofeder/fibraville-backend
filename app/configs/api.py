@@ -5,6 +5,11 @@ from flask_restful import Api
 def init_app(app: Flask) -> None:
     api = Api(app)
 
+    from app.models.plano_produto_model import PlanoProdutoModel
+    from app.models.contrato_usuario_model import ContratoUsuarioModel
+    from app.models.produto_fornecedor_model import ProdutoFornecedorModel
+    from app.models.visita_tecnica_produto_model import VisitaTecnicaProtudoModel
+    from app.models.visita_tecnica_tecnico_model import VisitaTecnicaTecnicoModel
 
     from app.views.usuario_nao_registrado_view import UsuarioNaoRegistradoResource
     api.add_resource(UsuarioNaoRegistradoResource, "/api/v1/usuario_nao_registrado/", endpoint="USUARIOS_NAOREGISTRADO")

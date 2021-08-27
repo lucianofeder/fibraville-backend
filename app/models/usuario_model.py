@@ -32,8 +32,6 @@ class UsuarioModel(db.Model, BaseServices):
     observacao: str
     bloqueado: bool
     ultimo_login: datetime
-    salt: str
-    usuario_permissao_id: int
     usuario_permissao: UsuarioPermissaoModel
     usuario_endereco_list: list #list[UsuarioEnderecoModel]
     contas_list: list #list[ContasAReceberModel]
@@ -49,17 +47,17 @@ class UsuarioModel(db.Model, BaseServices):
     nome = Column(String(150), nullable=False)
     sobrenome = Column(String(150), nullable=False)
     password_hash = Column(String(511), nullable=False)
-    email = Column(String(150), nullable=False)
+    email = Column(String(150), nullable=False, unique=True)
     data_nascimento = Column(Date)
-    data_regristro = Column(DateTime, default=datetime.utcnow())
+    data_regristro = Column(DateTime(), default=datetime.utcnow())
     e_pessoa_fisica = Column(Boolean, default=True)
-    cpf = Column(String(11))
-    cnpj = Column(String(14))
+    cpf = Column(String(11), unique=True)
+    cnpj = Column(String(14), unique=True)
     mae_nome = Column(String(150))
     pai_nome = Column(String(150))
     observacao = Column(String(511))
     bloqueado = Column(Boolean, default=False)
-    ultimo_login = Column(DateTime)
+    ultimo_login = Column(String(50))
     salt = Column(String(16), nullable=False)
 
     usuario_permissao = relationship("UsuarioPermissaoModel", backref=backref("usuario", uselist=False))
@@ -84,7 +82,7 @@ class UsuarioModel(db.Model, BaseServices):
 
 
     def check_password(self, password_to_compare) -> bool:
-        return check_password_hash(self.password_hash + self.salt, password_to_compare)
+        return check_password_hash(self.password_hash, password_to_compare + self.salt)
 
 
     # def serializer(self):
