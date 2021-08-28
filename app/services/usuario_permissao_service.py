@@ -1,31 +1,19 @@
 from app.models.usuario_permissao_model import UsuarioPermissaoModel
+from app.models.usuario_model import UsuarioModel
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
+from app.exc import DataNotFound
 
 class UsuarioPermissaoService:
-
-    @staticmethod
-    def get_all() -> list[UsuarioPermissaoModel]:
-        data_list: list[UsuarioPermissaoModel] = UsuarioPermissaoModel.query.all()
-        return [usuario_permissao for usuario_permissao in data_list]
-
-
-    @staticmethod
-    def get_by_id(id) -> UsuarioPermissaoModel:
-        usuario_permissao = UsuarioPermissaoModel.query.get(id)
-        if usuario_permissao:
-            return jsonify(usuario_permissao), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
 
 
     @staticmethod
     def get_by_user_id(usuario_id):
-        usuario_permissao = UsuarioPermissaoModel.query.filter(usuario_id=usuario_id).first()
+        usuario_permissao = UsuarioModel.query.get(usuario_id).usuario_permissao
         if usuario_permissao:
             return jsonify(usuario_permissao), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
-
 
 
     @staticmethod
@@ -38,12 +26,25 @@ class UsuarioPermissaoService:
 
     
     @staticmethod
-    def update(usuario_id, data) -> UsuarioPermissaoModel:
-        #TRATAR ERRO DE USUARIO NAO ENCONTRADO
-        permissao_atual = UsuarioPermissaoModel.query.filter(usuario_id=usuario_id).first()
+    def update(usuario_id) -> UsuarioPermissaoModel:
+        usuario = UsuarioModel.query.get(usuario_id)
+
+        if not usuario:
+            raise DataNotFound("Usuario")
+
+        parser = reqparse.RequestParser()
+
+        parser.add_argument("e_cliente", type=bool, store_missing=False)
+        parser.add_argument("e_representante", type=bool, store_missing=False)
+        parser.add_argument("e_comercial", type=bool, store_missing=False)
+        
+        data = parser.parse_args()
+
+        permissao_atual = UsuarioPermissaoModel.query.get(usuario.usuario_permissao_id)
+
         for key, value in data.items():
             setattr(permissao_atual, key, value)
         
         permissao_atual.save()
-        return permissao_atual
+        return jsonify(permissao_atual), HTTPStatus.OK
 
