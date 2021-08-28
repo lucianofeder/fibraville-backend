@@ -20,8 +20,7 @@ def init_app(app: Flask) -> None:
     api.add_resource(PlanoRetrieveResource, "/api/v1/plano/<int:plano_id>/", endpoint="PLANO_ID")
 
 
-    from app.views.usuario_permissao_view import UsuarioPermissaoResource, UsuarioPermissaoRetrieveResource
-    api.add_resource(UsuarioPermissaoResource, "/api/v1/usuario_permissao/", endpoint="USUARIOS_PERMISSAO")
+    from app.views.usuario_permissao_view import UsuarioPermissaoRetrieveResource
     api.add_resource(UsuarioPermissaoRetrieveResource, "/api/v1/usuario/<int:usuario_id>/usuario_permissao/", endpoint="USUARIO_PERMISSAO_ID")
 
 
