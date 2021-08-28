@@ -1,6 +1,4 @@
 from datetime import datetime
-
-from traitlets.traitlets import default
 from app.models.usuario_model import UsuarioModel
 from app.models.usuario_permissao_model import UsuarioPermissaoModel
 from app.exc import DataNotFound
@@ -8,7 +6,6 @@ from flask_restful import reqparse
 from flask import jsonify
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
-import ipdb
 
 
 class UsuarioService:
@@ -84,7 +81,7 @@ class UsuarioService:
             setattr(usuario, key, value)
         
         usuario.save()
-        return jsonify(usuario)
+        return jsonify(usuario), HTTPStatus.OK
 
     
     @staticmethod
