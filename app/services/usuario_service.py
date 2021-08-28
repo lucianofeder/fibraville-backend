@@ -112,6 +112,7 @@ class UsuarioService:
         if usuario.check_password(data['password']):
             token = create_access_token(identity=usuario)
             usuario.ultimo_login = datetime.utcnow()
+            usuario.save()
             return {"usuario_id": usuario.id, "token": token}, HTTPStatus.ACCEPTED
         else:
             return {"mensagem": "Informacoes de login invalidas"}, HTTPStatus.UNAUTHORIZED
