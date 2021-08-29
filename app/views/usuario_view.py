@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from app.exc import DataNotFound
+from app.exc import DataNotFound, DuplicatedData
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import make_response
@@ -13,8 +13,12 @@ class UsuarioResource(Resource):
     def get(self):
         return make_response(UsuarioService.get_all())
 
+
     def post(self):
-        return make_response(UsuarioService.create())
+        try:
+            return make_response(UsuarioService.create())
+        except DuplicatedData as e:
+            return e.message, HTTPStatus.BAD_REQUEST
 
 
 class UsuarioRetrieveResource(Resource):

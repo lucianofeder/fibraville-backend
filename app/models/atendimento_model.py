@@ -24,7 +24,7 @@ class AtendimentoModel(db.Model, BaseServices):
 
     id = Column(Integer, primary_key=True)
 
-    data = Column(DateTime, nullable=False)
+    data = Column(DateTime(), nullable=False, default=datetime.utcnow())
     descricao = Column(String(511))
     setor = Column(String(50))
     usuario_cpf = Column(String(11))

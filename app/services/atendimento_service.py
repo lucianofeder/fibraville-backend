@@ -26,13 +26,13 @@ class AtendimentoService:
     def create() -> AtendimentoModel:
         parser = reqparse.RequestParser()
 
-        parser.add_argument("data", type=datetime, required=True)
+        parser.add_argument("data", type=datetime)
         parser.add_argument("descricao", type=str, required=True)
         parser.add_argument("setor", type=str)
         parser.add_argument("usuario_cpf", type=str)
         parser.add_argument("usuario_telefone", type=str)
         parser.add_argument("usuario_id", type=int)
-        parser.add_argument("ordem_servico_id", type=int, required=True)
+        parser.add_argument("ordem_servico_id", type=int)
 
         data = parser.parse_args(strict=True)
 
@@ -52,7 +52,7 @@ class AtendimentoService:
         new_atendimento: AtendimentoModel = AtendimentoModel(**data)
         new_atendimento.save()
 
-        return new_atendimento
+        return jsonify(new_atendimento), HTTPStatus.CREATED
 
 
     @staticmethod
@@ -60,24 +60,33 @@ class AtendimentoService:
         
         parser = reqparse.RequestParser()
 
-        parser.add_argument("valor", type=float, required=True)
-        parser.add_argument("duracao_meses", type=int, required=True)
-        parser.add_argument("plano_id", type=int)
+        parser.add_argument("data", type=datetime, store_missing=False)
+        parser.add_argument("descricao", type=str, store_missing=False)
+        parser.add_argument("setor", type=str, store_missing=False)
+        parser.add_argument("usuario_cpf", type=str, store_missing=False)
+        parser.add_argument("usuario_telefone", type=str, store_missing=False)
+        parser.add_argument("usuario_id", type=int, store_missing=False)
+        parser.add_argument("ordem_servico_id", type=int, store_missing=False)
 
         data = parser.parse_args(strict=True)
 
         atendimento = AtendimentoModel.query.get(atendimento_id)
+
+        if not atendimento:
+            raise DataNotFound("Atendimento")
+
         for key, value in data.items():
             setattr(atendimento, key, value)
         
         atendimento.save()
-        return atendimento
+        return jsonify(atendimento), HTTPStatus.OK
 
     
     @staticmethod
     def delete(atendimento_id) -> None:
-        endereco = AtendimentoModel.query.get(atendimento_id)
-        if endereco:
+        atendimento = AtendimentoModel.query.get(atendimento_id)
+        if atendimento:
+            atendimento.delete()
             return {}, HTTPStatus.NO_CONTENT
         return {}, HTTPStatus.NOT_FOUND
 
@@ -89,7 +98,7 @@ class AtendimentoService:
         if not usuario:
             raise DataNotFound('Usuario')
 
-        atendimento = AtendimentoModel.query.filter(usuario_id=usuario_id)
+        atendimento = AtendimentoModel.query.filter_by(usuario_id=usuario_id).all()
         if atendimento:
             return jsonify(atendimento), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
