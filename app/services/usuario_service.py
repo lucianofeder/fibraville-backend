@@ -6,6 +6,7 @@ from flask_restful import reqparse
 from flask import jsonify
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
+from app.exc import DuplicatedData
 
 
 class UsuarioService:
@@ -42,6 +43,15 @@ class UsuarioService:
         parser.add_argument("usuario_permissao", type=dict, required=True)
 
         data = parser.parse_args(strict=True)
+
+        usuario_check = UsuarioModel.query.filter_by(cpf=data.cpf).first()
+        if usuario_check:
+            raise DuplicatedData('CPF')
+        
+        usuario_check = UsuarioModel.query.filter_by(email=data.email).first()
+        if usuario_check:
+            raise DuplicatedData('Email')
+
         usuario_permissao = data.pop('usuario_permissao')
 
         new_permissao = UsuarioPermissaoModel(**usuario_permissao)
