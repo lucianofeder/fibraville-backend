@@ -25,12 +25,12 @@ class ContasAPagarService:
         
         parser = reqparse.RequestParser()
 
-        parser.add_argument("valor", type=float)
-        parser.add_argument("data_emissao", type=datetime)
-        parser.add_argument("data_a_pagar", type=date)
-        parser.add_argument("nfe", type=str)
-        parser.add_argument("n_documento", type=str)
-        parser.add_argument("pago", type=bool)
+        parser.add_argument("valor", type=float, store_missing=False)
+        parser.add_argument("data_emissao", type=datetime, store_missing=False)
+        parser.add_argument("data_a_pagar", type=date, store_missing=False)
+        parser.add_argument("nfe", type=str, store_missing=False)
+        parser.add_argument("n_documento", type=str, store_missing=False)
+        parser.add_argument("pago", type=bool, store_missing=False)
 
         data = parser.parse_args(strict=True)
 
@@ -43,7 +43,7 @@ class ContasAPagarService:
             setattr(conta, key, value)
         
         conta.save()
-        return conta
+        return jsonify(conta), HTTPStatus.CREATED
 
 
     @staticmethod
@@ -58,8 +58,9 @@ class ContasAPagarService:
     
     @staticmethod
     def delete(conta_id) -> None:
-        endereco = ContasAPagarModel.query.get(conta_id)
-        if endereco:
+        conta = ContasAPagarModel.query.get(conta_id)
+        if conta:
+            conta.delete()
             return {}, HTTPStatus.NO_CONTENT
         return {}, HTTPStatus.NOT_FOUND
 
@@ -94,5 +95,5 @@ class ContasAPagarService:
         new_conta_a_pagar: ContasAPagarModel = ContasAPagarModel(**data, fornecedor_id=fornecedor_id)
         new_conta_a_pagar.save()
 
-        return new_conta_a_pagar
+        return jsonify(new_conta_a_pagar), HTTPStatus.CREATED
 

@@ -35,7 +35,7 @@ class FornecedorService:
         new_fornecedor: FornecedorModel = FornecedorModel(**data)
         new_fornecedor.save()
 
-        return new_fornecedor
+        return jsonify(new_fornecedor), HTTPStatus.CREATED
 
 
     @staticmethod
@@ -46,11 +46,11 @@ class FornecedorService:
 
         parser = reqparse.RequestParser()
 
-        parser.add_argument("razao_social", type=str)
-        parser.add_argument("nome_fantasia", type=str)
-        parser.add_argument("cnpj", type=str)
-        parser.add_argument("inscricao_estadual", type=str)
-        parser.add_argument("contato", type=str)
+        parser.add_argument("razao_social", type=str, store_missing=False)
+        parser.add_argument("nome_fantasia", type=str, store_missing=False)
+        parser.add_argument("cnpj", type=str, store_missing=False)
+        parser.add_argument("inscricao_estadual", type=str, store_missing=False)
+        parser.add_argument("contato", type=str, store_missing=False)
 
         data = parser.parse_args(strict=True)
 
@@ -58,12 +58,13 @@ class FornecedorService:
             setattr(fornecedor, key, value)
         
         fornecedor.save()
-        return fornecedor
+        return jsonify(fornecedor), HTTPStatus.OK
 
     
     @staticmethod
     def delete(fornecedor_id) -> None:
         fornecedor = FornecedorModel.query.get(fornecedor_id)
         if fornecedor:
+            fornecedor.delete()
             return {}, HTTPStatus.NO_CONTENT
         return {}, HTTPStatus.NOT_FOUND
