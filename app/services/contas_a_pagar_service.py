@@ -35,6 +35,10 @@ class ContasAPagarService:
         data = parser.parse_args(strict=True)
 
         conta = ContasAPagarModel.query.get(conta_id)
+        
+        if not conta:
+            raise DataNotFound('Conta')
+
         for key, value in data.items():
             setattr(conta, key, value)
         
@@ -62,9 +66,9 @@ class ContasAPagarService:
 
     @staticmethod
     def get_by_fornecedor_id(fornecedor_id):
-        contas_list = ContasAPagarModel.query.filter(fornecedor_id=fornecedor_id)
+        contas_list = ContasAPagarModel.query.filter_by(fornecedor_id=fornecedor_id).all()
         if contas_list:
-            return jsonify({"fornecedor_id": fornecedor_id, "contas_list": contas_list}), HTTPStatus.OK
+            return {"fornecedor_id": fornecedor_id, "contas_list": contas_list}, HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
 
 

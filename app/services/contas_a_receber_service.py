@@ -35,6 +35,9 @@ class ContasAReceberService:
         data = parser.parse_args(strict=True)
 
         conta = ContasAReceberModel.query.get(conta_id)
+        if not conta:
+            raise DataNotFound('Conta')
+
         for key, value in data.items():
             setattr(conta, key, value)
         
