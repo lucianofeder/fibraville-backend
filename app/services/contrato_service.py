@@ -39,7 +39,7 @@ class ContratoService:
         new_contrato: ContratoModel = ContratoModel(**data)
         new_contrato.save()
 
-        return new_contrato
+        return jsonify(new_contrato), HTTPStatus.CREATED
 
 
     @staticmethod
@@ -47,9 +47,9 @@ class ContratoService:
         
         parser = reqparse.RequestParser()
 
-        parser.add_argument("valor", type=float, required=True)
-        parser.add_argument("duracao_meses", type=int, required=True)
-        parser.add_argument("plano_id", type=int)
+        parser.add_argument("valor", type=float, store_missing=False)
+        parser.add_argument("duracao_meses", type=int, store_missing=False)
+        parser.add_argument("plano_id", type=int, store_missing=False)
 
         data = parser.parse_args(strict=True)
 
@@ -58,7 +58,7 @@ class ContratoService:
             setattr(contrato, key, value)
         
         contrato.save()
-        return contrato
+        return jsonify(contrato), HTTPStatus.OK
 
     
     @staticmethod
