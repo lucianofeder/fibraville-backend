@@ -3,7 +3,6 @@ from sqlalchemy.sql.sqltypes import String
 from app.services.helper import BaseServices
 from app.configs.database import db
 from dataclasses import dataclass
-from app.services.helper import add_commit
 
 
 @dataclass
@@ -36,8 +35,6 @@ class UsuarioNaoRegistradoModel(db.Model, BaseServices):
     cidade = Column(String(150))
     estado = Column(String(150))
 
-    def save(self):
-        return add_commit(self)
 
     # def serializer(self):
     #     return {

@@ -16,7 +16,7 @@ class ContasAPagarModel(db.Model, BaseServices):
     data_a_pagar: datetime
     nfe: str
     n_documento: str
-    pago: bool = False
+    data_pago: datetime
 
     __tablename__ = "contas_a_pagar"
 
@@ -28,7 +28,7 @@ class ContasAPagarModel(db.Model, BaseServices):
     data_a_pagar = Column(Date, nullable=False)
     nfe = Column(String(150))
     n_documento = Column(String(150))
-    pago = Column(Boolean, default=False)
+    data_pago = Column(DateTime, default=None)
 
     fornecedor_id = Column(Integer, ForeignKey("fornecedor.id"), nullable=False)
 
