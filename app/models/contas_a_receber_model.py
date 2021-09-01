@@ -14,7 +14,6 @@ class ContasAReceberModel(db.Model, BaseServices):
     data_a_pagar: date
     data_pago: datetime
     usuario_id: int
-    pago: bool = False
 
     __tablename__ = "contas_a_receber"
 
@@ -22,8 +21,7 @@ class ContasAReceberModel(db.Model, BaseServices):
 
     valor = Column(Float, nullable=False)
     data_a_pagar = Column(Date, nullable=False)
-    data_pago = Column(DateTime)
-    pago = Column(Boolean, default=False)
+    data_pago = Column(DateTime, default=None)
 
     usuario_id = Column(Integer, ForeignKey("usuario.id"))
 
