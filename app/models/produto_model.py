@@ -28,7 +28,7 @@ class ProdutoModel(db.Model, BaseServices):
     valor = Column(Float, nullable=False)
     numero_serie = Column(String(150))
     estoque = Column(Float, default=0)
-    velocidade = Column(Float, default=False)
+    velocidade = Column(Float, default=None)
 
     # planos_list = relationship("PlanoModel", secondary="plano_produto", backref="produtos_list")
     fornecedores_list = relationship("FornecedorModel", secondary="produto_fornecedor", backref="produtos_list")
