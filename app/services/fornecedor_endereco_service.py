@@ -22,7 +22,11 @@ class FornecedorEnderecoService:
 
 
     @staticmethod
-    def create() -> FornecedorEnderecoModel:
+    def create(fornecedor_id) -> FornecedorEnderecoModel:
+        fornecedor = FornecedorModel.query.get(fornecedor_id)
+        if not fornecedor:
+            raise DataNotFound('Fornecedor')
+        
         parser = reqparse.RequestParser()
 
         parser.add_argument("cep", type=str, required=True)
@@ -39,7 +43,10 @@ class FornecedorEnderecoService:
         new_fornecedor: FornecedorEnderecoModel = FornecedorEnderecoModel(**data)
         new_fornecedor.save()
 
-        return new_fornecedor
+        fornecedor.endereco_fornecedor_id = new_fornecedor.id
+        fornecedor.save()
+
+        return jsonify(new_fornecedor), HTTPStatus.CREATED
 
 
     @staticmethod
@@ -50,14 +57,14 @@ class FornecedorEnderecoService:
 
         parser = reqparse.RequestParser()
 
-        parser.add_argument("cep", type=str, required=True)
-        parser.add_argument("rua", type=str, required=True)
-        parser.add_argument("numero", type=str)
-        parser.add_argument("bairro", type=str, required=True)
-        parser.add_argument("cidade", type=str, required=True)
-        parser.add_argument("estado", type=str, required=True)
-        parser.add_argument("complemento", type=str)
-        parser.add_argument("referencia", type=str)
+        parser.add_argument("cep", type=str, store_missing=False)
+        parser.add_argument("rua", type=str, store_missing=False)
+        parser.add_argument("numero", type=str, store_missing=False)
+        parser.add_argument("bairro", type=str, store_missing=False)
+        parser.add_argument("cidade", type=str, store_missing=False)
+        parser.add_argument("estado", type=str, store_missing=False)
+        parser.add_argument("complemento", type=str, store_missing=False)
+        parser.add_argument("referencia", type=str, store_missing=False)
 
         data = parser.parse_args(strict=True)
 
@@ -65,7 +72,7 @@ class FornecedorEnderecoService:
             setattr(endereco, key, value)
         
         endereco.save()
-        return endereco
+        return jsonify(endereco), HTTPStatus.OK
 
     
     @staticmethod
