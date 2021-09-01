@@ -37,12 +37,12 @@ class OrdemServicoService:
 
         usuario = UsuarioModel.query.get(data.usuario_id)
         if not usuario:
-            raise DataNotFound('Usuario')
+            raise DataNotFound('Usuario')    
 
         new_os: OrdemServicoModel = OrdemServicoModel(**data)
         new_os.save()
 
-        return new_os
+        return jsonify(new_os), HTTPStatus.CREATED
 
 
     @staticmethod
@@ -50,24 +50,25 @@ class OrdemServicoService:
         
         parser = reqparse.RequestParser()
 
-        parser.add_argument("valor", type=float)
-        parser.add_argument("proposito", type=str)
-        parser.add_argument("descricao", type=str)
+        parser.add_argument("valor", type=float, store_missing=False)
+        parser.add_argument("proposito", type=str, store_missing=False)
+        parser.add_argument("descricao", type=str, store_missing=False)
 
         data = parser.parse_args(strict=True)
 
-        atendimento = OrdemServicoModel.query.get(os_id)
+        os = OrdemServicoModel.query.get(os_id)
         for key, value in data.items():
-            setattr(atendimento, key, value)
+            setattr(os, key, value)
         
-        atendimento.save()
-        return atendimento
+        os.save()
+        return jsonify(os), HTTPStatus.OK
 
     
     @staticmethod
     def delete(os_id) -> None:
         os = OrdemServicoModel.query.get(os_id)
         if os:
+            os.delete()
             return {}, HTTPStatus.NO_CONTENT
         return {}, HTTPStatus.NOT_FOUND
 
@@ -79,7 +80,7 @@ class OrdemServicoService:
         if not usuario:
             raise DataNotFound('Usuario')
 
-        atendimento = OrdemServicoModel.query.filter(usuario_id=usuario_id)
-        if atendimento:
-            return jsonify(atendimento), HTTPStatus.OK
+        os = OrdemServicoModel.query.filter_by(usuario_id=usuario_id).all()
+        if os:
+            return jsonify(os), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
