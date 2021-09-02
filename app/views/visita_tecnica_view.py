@@ -2,6 +2,7 @@ from http import HTTPStatus
 from app.exc import DataNotFound
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
+from flask import make_response
 
 from app.services.visita_tecnica_service import VisitaTecnicaService
 
@@ -10,32 +11,27 @@ class VisitaTecnicaResource(Resource):
 
     # @jwt_required()
     def get(self):
-        response, response.status_code = VisitaTecnicaService.get_all()
-        return response
+        return make_response(VisitaTecnicaService.get_all())
 
     def post(self):
-        response, response.status_code = VisitaTecnicaService.create()
-        return response
+        return make_response(VisitaTecnicaService.create())
 
 
 class VisitaTecnicaRetrieveResource(Resource):
 
     # @jwt_required()
-    def get(self, visita_id):
-        response, response.status_code = VisitaTecnicaService.get_by_id(visita_id)
-        return response
+    def get(self, visita_tecnica_id):
+        return make_response(VisitaTecnicaService.get_by_id(visita_tecnica_id))
     
 
     # @jwt_required()
-    def patch(self, visita_id):
+    def patch(self, visita_tecnica_id):
         try:
-            response, response.status_code = VisitaTecnicaService.update(visita_id)
-            return response
+            return make_response(VisitaTecnicaService.update(visita_tecnica_id))
         except DataNotFound as e:
             return e.message, HTTPStatus.NOT_FOUND
 
     
     # @jwt_required()
-    def delete(self, visita_id):
-        response, response.status_code = VisitaTecnicaService.delete(visita_id)
-        return response
+    def delete(self, visita_tecnica_id):
+        return make_response(VisitaTecnicaService.delete(visita_tecnica_id))

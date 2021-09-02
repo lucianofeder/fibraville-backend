@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class VisitaTecnicaProtudoModel(db.Model, BaseServices):
+class VisitaTecnicaProdutoModel(db.Model, BaseServices):
     id: int
     produto_id: int
     visita_tecnica_id: int
@@ -18,7 +18,7 @@ class VisitaTecnicaProtudoModel(db.Model, BaseServices):
 
     produto_id = Column(Integer, ForeignKey("produto.id"))
     visita_tecnica_id = Column(Integer, ForeignKey("visita_tecnica.id"))
-    quantidade = Column(Float, nullable=False)
+    quantidade = Column(Float, default=0)
 
     # def serializer(self):
     #     return {
