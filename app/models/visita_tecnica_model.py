@@ -32,13 +32,21 @@ class VisitaTecnicaModel(db.Model, BaseServices):
     produtos_list = relationship("ProdutoModel", secondary="visita_tecnica_produto", backref="visitas_tecnicas_list")
     tecnicos_list = relationship("UsuarioModel", secondary="visita_tecnica_tecnico", backref="visitas_tecnicas_list")
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "data_agendamento": self.data_agendamento,
-    #         "duracao_estimada": self.duracao_estimada,
-    #         "observacao": self.observacao,
-    #         "produtos_list": self.produtos_list,
-    #         "tecnicos_list": self.tecnicos_list,
-    #         "ordem_servico_id": self.ordem_servico_id
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "data_agendamento": self.data_agendamento,
+            "duracao_estimada": self.duracao_estimada,
+            "observacao": self.observacao,
+            "ordem_servico_id": self.ordem_servico_id,
+            "produtos_list": [{
+                "id": produto.id,
+                "modelo": produto.modelo,
+                "marca": produto.marca
+            } for produto in self.produtos_list],
+            "tecnicos_list": [{
+                "id": tecnico.id,
+                "nome": tecnico.nome,
+                "sobrenome": tecnico.sobrenome
+            } for tecnico in self.tecnicos_list]
+        }
