@@ -35,7 +35,7 @@ class UsuarioModel(db.Model, BaseServices):
     usuario_permissao: UsuarioPermissaoModel
     usuario_endereco_list: list #list[UsuarioEnderecoModel]
     contas_list: list #list[ContasAReceberModel]
-    ordens_servicos_list: list #list[OrdemServicoModel]
+    # ordens_servicos_list: list #list[OrdemServicoModel]
     atendimentos_recebidos_list: list #list[AtendimentoModel]
     # atendimentos_realizados_list: list #list[AtendimentoModel]
 
