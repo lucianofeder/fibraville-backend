@@ -55,7 +55,6 @@ class BaseServices():
         per_page = int(request.args.get('per_page', per_page))
         page = int(request.args.get('page', page))
         last_page = ceil(len(data_list)/per_page)
-        ipdb.set_trace()
 
         if last_page == 0:
             return {
