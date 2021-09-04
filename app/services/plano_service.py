@@ -3,6 +3,7 @@ from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
 from app.services.helper import BaseServices
+import ipdb
 
 class PlanoService(BaseServices):
     model = PlanoModel
@@ -11,7 +12,7 @@ class PlanoService(BaseServices):
     @staticmethod
     def create_plano() -> PlanoModel:
         parser = reqparse.RequestParser()
-
+        ipdb.set_trace()
         parser.add_argument("valor", type=float, required=True)
         parser.add_argument("velocidade", type=int, required=True)
 

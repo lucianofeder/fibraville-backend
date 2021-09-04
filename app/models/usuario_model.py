@@ -27,7 +27,6 @@ class UsuarioModel(db.Model, BaseModel):
     e_pessoa_fisica: bool
     cpf: str
     cnpj: str
-    mae_nome: str
     pai_nome: str
     observacao: str
     bloqueado: bool

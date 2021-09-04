@@ -1,8 +1,12 @@
+import ipdb
 from app.configs.database import db
 from flask import jsonify
 from http import HTTPStatus
 from math import ceil
 from app.exc import PageNotFound
+from flask import request
+from sqlalchemy import desc
+
 
 class BaseModel():
     def save(self):
@@ -13,14 +17,6 @@ class BaseModel():
         db.session.delete(self)
         db.session.commit()
 
-    # def __lt__(self, other):
-    #     if isinstance(other, BaseModel):
-    #         return self.id < other.id
-
-    # def __gt__(self, other):
-    #     if isinstance(other, BaseModel):
-    #         return self.id > other.id
-
 
 class BaseServices():
     model = None
@@ -28,9 +24,14 @@ class BaseServices():
 
     @classmethod
     def get_all(cls):
-        data_list = cls.model.query.order_by(cls.model.id).all()
-        return jsonify(BaseServices.paginate(data_list)), HTTPStatus.OK
-    
+        try:
+            data_list = cls.model.query.order_by(desc(cls.model.id)).all()
+            return jsonify(BaseServices.paginate(data_list)), HTTPStatus.OK
+        except PageNotFound as e:
+            return e.message, HTTPStatus.NOT_FOUND
+        except ValueError as e:
+            return {"error": str(e)}, HTTPStatus.BAD_REQUEST
+
 
     @classmethod
     def get_by_id(cls, id):
@@ -51,17 +52,26 @@ class BaseServices():
     
     @staticmethod
     def paginate(data_list, per_page=15, page=1):
+        per_page = int(request.args.get('per_page', per_page))
+        page = int(request.args.get('page', page))
         last_page = ceil(len(data_list)/per_page)
+        ipdb.set_trace()
+
+        if last_page == 0:
+            return {
+                "page": page,
+                "previous_page": None,
+                "next_page": None,
+                "data": []
+            }
+
         if page < 1 or page > last_page:
             raise PageNotFound(page)
-
-        # if len(data_list) > 0 and 'id' in data_list[0]:
-        #     data_list = sorted(data_list, key=lambda k: k['id']) 
 
         previous_page = None
         next_page = None
 
-        if len(data_list) < last_page:
+        if page < last_page:
             next_page = page + 1
         
         if page > 1:
@@ -69,7 +79,7 @@ class BaseServices():
         
         return {
             "page": page,
-            "previous_page": previous_page,
-            "next_page": next_page,
+            "previous_page": f'page={previous_page}&per_page={per_page}' if previous_page else previous_page,
+            "next_page": f'page={next_page}&per_page={per_page}' if next_page else next_page,
             "data": data_list[((page-1)*per_page):(page*per_page)]
         }
