@@ -3,21 +3,11 @@ from app.models.fornecedor_model import FornecedorModel
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
-
-class FornecedorService:
-
-    @staticmethod
-    def get_all():
-        fornecedores_list = FornecedorModel.query.all()
-        return jsonify(fornecedores_list), HTTPStatus.OK 
+from app.services.helper import BaseServices
 
 
-    @staticmethod
-    def get_by_id(fornecedor_id) -> FornecedorModel:
-        fornecedor = FornecedorModel.query.get(fornecedor_id)
-        if fornecedor:
-            return jsonify(fornecedor), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
+class FornecedorService(BaseServices):
+    model = FornecedorModel
 
 
     @staticmethod
@@ -60,11 +50,3 @@ class FornecedorService:
         fornecedor.save()
         return jsonify(fornecedor), HTTPStatus.OK
 
-    
-    @staticmethod
-    def delete(fornecedor_id) -> None:
-        fornecedor = FornecedorModel.query.get(fornecedor_id)
-        if fornecedor:
-            fornecedor.delete()
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND

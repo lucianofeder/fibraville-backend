@@ -5,21 +5,11 @@ from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
 from datetime import datetime
-
-class AtendimentoService:
-
-    @staticmethod
-    def get_all():
-        atendimentos_list = AtendimentoModel.query.all()
-        return jsonify(atendimentos_list), HTTPStatus.OK 
+from app.services.helper import BaseServices
 
 
-    @staticmethod
-    def get_by_id(atendimento_id) -> AtendimentoModel:
-        atendimento = AtendimentoModel.query.get(atendimento_id)
-        if atendimento:
-            return jsonify(atendimento), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
+class AtendimentoService(BaseServices):
+    model = AtendimentoModel
 
 
     @staticmethod
@@ -80,15 +70,6 @@ class AtendimentoService:
         
         atendimento.save()
         return jsonify(atendimento), HTTPStatus.OK
-
-    
-    @staticmethod
-    def delete(atendimento_id) -> None:
-        atendimento = AtendimentoModel.query.get(atendimento_id)
-        if atendimento:
-            atendimento.delete()
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
 
     
     @staticmethod

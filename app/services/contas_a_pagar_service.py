@@ -5,21 +5,12 @@ from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
 from datetime import datetime
+from app.services.helper import BaseServices
 import ipdb
 
-class ContasAPagarService:
+class ContasAPagarService(BaseServices):
+    model = ContasAPagarModel
 
-    @staticmethod
-    def get_all():
-        contas = ContasAPagarModel.query.all()
-        return jsonify(contas), HTTPStatus.OK 
-
-    @staticmethod
-    def get_by_id(conta_id) -> ContasAPagarModel:
-        conta = ContasAPagarModel.query.get(conta_id)
-        if conta:
-            return jsonify(conta), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
 
     @staticmethod
     def update(conta_id) -> ContasAPagarModel:
@@ -60,21 +51,12 @@ class ContasAPagarService:
             return {}, HTTPStatus.ACCEPTED
         return {}, HTTPStatus.NOT_FOUND
 
-    
-    @staticmethod
-    def delete(conta_id) -> None:
-        conta = ContasAPagarModel.query.get(conta_id)
-        if conta:
-            conta.delete()
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
-
 
     @staticmethod
     def get_by_fornecedor_id(fornecedor_id):
         contas_list = ContasAPagarModel.query.filter_by(fornecedor_id=fornecedor_id).all()
         if contas_list:
-            return jsonify(contas_list), HTTPStatus.OK
+            return jsonify(BaseServices.paginate(contas_list)), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
 
 

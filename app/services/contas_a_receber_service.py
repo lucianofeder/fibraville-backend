@@ -4,21 +4,13 @@ from app.exc import DataNotFound
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
-from datetime import datetime, date
+from datetime import datetime
+from app.services.helper import BaseServices
 
-class ContasAReceberService:
 
-    @staticmethod
-    def get_all():
-        contas_list = ContasAReceberModel.query.all()
-        return jsonify(contas_list), HTTPStatus.OK 
+class ContasAReceberService(BaseServices):
+    model = ContasAReceberModel
 
-    @staticmethod
-    def get_by_id(conta_id) -> ContasAReceberModel:
-        conta = ContasAReceberModel.query.get(conta_id)
-        if conta:
-            return jsonify(conta), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
 
     @staticmethod
     def update(conta_id) -> ContasAReceberModel:
@@ -62,20 +54,12 @@ class ContasAReceberService:
             return {}, HTTPStatus.ACCEPTED
         return {}, HTTPStatus.NOT_FOUND
 
-    
-    @staticmethod
-    def delete(conta_id) -> None:
-        endereco = ContasAReceberModel.query.get(conta_id)
-        if endereco:
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
-
 
     @staticmethod
     def get_by_usuario_id(usuario_id):
         contas_list = ContasAReceberModel.query.filter_by(usuario_id=usuario_id).all()
         if contas_list:
-            return jsonify({"usuario_id": usuario_id, "contas_list": contas_list}), HTTPStatus.OK
+            return jsonify(BaseServices.paginate(contas_list)), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
 
 

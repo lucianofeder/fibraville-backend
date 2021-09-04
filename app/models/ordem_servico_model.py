@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, DateTime, Float, String
-from app.services.helper import BaseServices
+from app.services.helper import BaseModel
 from app.configs.database import db
 from datetime import datetime
 from dataclasses import dataclass
@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class OrdemServicoModel(db.Model, BaseServices):
+class OrdemServicoModel(db.Model, BaseModel):
     id: int
     data_abertura: datetime
     data_fechamento: datetime

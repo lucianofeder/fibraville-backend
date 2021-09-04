@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, Float
-from app.services.helper import BaseServices
+from app.services.helper import BaseModel
 from app.configs.database import db
 from dataclasses import dataclass
 from datetime import datetime
@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 @dataclass
-class ContratoUsuarioModel(db.Model, BaseServices):
+class ContratoUsuarioModel(db.Model, BaseModel):
     id: int
     data_inicio: datetime
     data_fim: datetime

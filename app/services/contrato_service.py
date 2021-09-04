@@ -4,21 +4,11 @@ from app.exc import DataNotFound
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
+from app.services.helper import BaseServices
 
-class ContratoService:
 
-    @staticmethod
-    def get_all():
-        contratos_list = ContratoModel.query.all()
-        return jsonify(contratos_list), HTTPStatus.OK 
-
-    @staticmethod
-    def get_by_id(contrato_id) -> ContratoModel:
-        conta = ContratoModel.query.get(contrato_id)
-        if conta:
-            return jsonify(conta), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
-
+class ContratoService(BaseServices):
+    model = ContratoModel
 
 
     @staticmethod
@@ -60,10 +50,3 @@ class ContratoService:
         contrato.save()
         return jsonify(contrato), HTTPStatus.OK
 
-    
-    @staticmethod
-    def delete(contrato_id) -> None:
-        endereco = ContratoModel.query.get(contrato_id)
-        if endereco:
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND

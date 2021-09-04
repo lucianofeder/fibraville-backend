@@ -2,13 +2,13 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Boolean, String
-from app.services.helper import BaseServices
+from app.services.helper import BaseModel
 from app.configs.database import db
 from dataclasses import dataclass
 
 
 @dataclass
-class UsuarioEnderecoModel(db.Model, BaseServices):
+class UsuarioEnderecoModel(db.Model, BaseModel):
     id: int
     e_comercial: bool
     cep: str
