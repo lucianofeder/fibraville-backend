@@ -1,3 +1,4 @@
+from app.services.helper import BaseServices
 from datetime import datetime
 from app.models.usuario_model import UsuarioModel
 from app.models.usuario_permissao_model import UsuarioPermissaoModel
@@ -9,20 +10,8 @@ from http import HTTPStatus
 from app.exc import DuplicatedData
 
 
-class UsuarioService:
-
-    @staticmethod
-    def get_all():
-        usuarios_list = UsuarioModel.query.all()
-        return jsonify(usuarios_list), HTTPStatus.OK 
-
-
-    @staticmethod
-    def get_by_id(usuario_id) -> UsuarioModel:
-        usuario = UsuarioModel.query.get(usuario_id)
-        if usuario:
-            return jsonify(usuario), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
+class UsuarioService(BaseServices):
+    model = UsuarioModel
 
 
     @staticmethod
@@ -92,14 +81,6 @@ class UsuarioService:
         
         usuario.save()
         return jsonify(usuario), HTTPStatus.OK
-
-    
-    @staticmethod
-    def delete(usuario_id) -> None:
-        usuario = UsuarioModel.query.get(usuario_id)
-        if usuario:
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
 
     
     @staticmethod

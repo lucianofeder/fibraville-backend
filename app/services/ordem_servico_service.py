@@ -5,21 +5,11 @@ from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
 from datetime import datetime
-
-class OrdemServicoService:
-
-    @staticmethod
-    def get_all():
-        ordens_servico_list = OrdemServicoModel.query.all()
-        return jsonify(ordens_servico_list), HTTPStatus.OK 
+from app.services.helper import BaseServices
 
 
-    @staticmethod
-    def get_by_id(os_id) -> OrdemServicoModel:
-        os = OrdemServicoModel.query.get(os_id)
-        if os:
-            return jsonify(os), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
+class OrdemServicoService(BaseServices):
+    model = OrdemServicoModel
 
 
     @staticmethod
@@ -65,15 +55,6 @@ class OrdemServicoService:
 
     
     @staticmethod
-    def delete(os_id) -> None:
-        os = OrdemServicoModel.query.get(os_id)
-        if os:
-            os.delete()
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
-
-    
-    @staticmethod
     def get_by_usuario(usuario_id) -> OrdemServicoModel:
 
         usuario = UsuarioModel.query.get(usuario_id)
@@ -82,5 +63,5 @@ class OrdemServicoService:
 
         os = OrdemServicoModel.query.filter_by(usuario_id=usuario_id).all()
         if os:
-            return jsonify(os), HTTPStatus.OK
+            return jsonify(BaseServices.paginate(os)), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND

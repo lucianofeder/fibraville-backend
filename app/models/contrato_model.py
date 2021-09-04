@@ -1,14 +1,14 @@
 from sqlalchemy import Column, Integer, Float
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
-from app.services.helper import BaseServices
+from app.services.helper import BaseModel
 from app.configs.database import db
 from dataclasses import dataclass
 # from app.models.plano_model import PlanoModel
 
 
 @dataclass
-class ContratoModel(db.Model, BaseServices):
+class ContratoModel(db.Model, BaseModel):
     id: int
     valor: float
     duracao_meses: int

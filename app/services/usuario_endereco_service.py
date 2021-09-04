@@ -3,20 +3,12 @@ from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
 from app.exc import DuplicatedData
+from app.services.helper import BaseServices
 
-class UsuarioEnderecoService:
 
-    @staticmethod
-    def get_all():
-        enderecos = UsuarioEnderecoModel.query.all()
-        return jsonify(enderecos), HTTPStatus.OK 
+class UsuarioEnderecoService(BaseServices):
+    model = UsuarioEnderecoModel
 
-    @staticmethod
-    def get_by_id(endereco_id) -> UsuarioEnderecoModel:
-        usuario_endereco = UsuarioEnderecoModel.query.get(endereco_id)
-        if usuario_endereco:
-            return jsonify(usuario_endereco), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
 
     @staticmethod
     def update(endereco_id) -> UsuarioEnderecoModel:
@@ -48,21 +40,12 @@ class UsuarioEnderecoService:
         endereco_atual.save()
         return jsonify(endereco_atual), HTTPStatus.OK
 
-    
-    @staticmethod
-    def delete(endereco_id) -> None:
-        endereco = UsuarioEnderecoModel.query.get(endereco_id)
-        if endereco:
-            endereco.delete()
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
-
 
     @staticmethod
     def get_by_user_id(usuario_id):
-        usuario_endereco = UsuarioEnderecoModel.query.filter_by(usuario_id=usuario_id)
+        usuario_endereco = UsuarioEnderecoModel.query.filter_by(usuario_id=usuario_id).all()
         if usuario_endereco:
-            return jsonify({"usuario_id": usuario_id, "enderecos": list(usuario_endereco)}), HTTPStatus.OK
+            return jsonify(BaseServices.paginate(usuario_endereco)), HTTPStatus.OK
         return {}, HTTPStatus.NOT_FOUND
 
 

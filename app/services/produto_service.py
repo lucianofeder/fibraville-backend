@@ -4,21 +4,11 @@ from app.exc import DataNotFound
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
-
-class ProdutoService:
-
-    @staticmethod
-    def get_all():
-        produtos_list = ProdutoModel.query.all()
-        return jsonify(produtos_list), HTTPStatus.OK 
+from app.services.helper import BaseServices
 
 
-    @staticmethod
-    def get_by_id(produto_id) -> ProdutoModel:
-        produto = ProdutoModel.query.get(produto_id)
-        if produto:
-            return jsonify(produto), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
+class ProdutoService(BaseServices):
+    model = ProdutoModel
 
 
     @staticmethod
@@ -64,18 +54,9 @@ class ProdutoService:
 
     
     @staticmethod
-    def delete(produto_id) -> None:
-        produto = ProdutoModel.query.get(produto_id)
-        if produto:
-            produto.delete()
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
-
-    
-    @staticmethod
     def get_by_fornecedor(fornecedor_id) -> ProdutoModel:
 
         fornecedor = FornecedorModel.query.get(fornecedor_id)
         if not fornecedor:
             raise DataNotFound('Fornecedor')        
-        return jsonify(fornecedor.produtos_list), HTTPStatus.OK
+        return jsonify(BaseServices.paginate(fornecedor.produtos_list)), HTTPStatus.OK
