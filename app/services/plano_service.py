@@ -2,21 +2,10 @@ from app.models.plano_model import PlanoModel
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
+from app.services.helper import BaseServices
 
-class PlanoService:
-
-    @staticmethod
-    def get_all() -> list[PlanoModel]:
-        data_list: list[PlanoModel] = PlanoModel.query.all()
-        return [plano for plano in data_list]
-
-
-    @staticmethod
-    def get_by_id(id) -> PlanoModel:
-        plano = PlanoModel.query.get(id)
-        if plano:
-            return jsonify(plano), HTTPStatus.CREATED
-        return {}, HTTPStatus.NOT_FOUND
+class PlanoService(BaseServices):
+    model = PlanoModel
 
 
     @staticmethod
@@ -33,12 +22,4 @@ class PlanoService:
 
         return jsonify(new_plano), HTTPStatus.CREATED
 
-
-    @staticmethod
-    def delete(id) -> PlanoModel:
-        plano = PlanoModel.query.get(id)
-        if plano:
-            plano.delete()
-            return {"mensagem": "Plano deletado com sucesso"}, HTTPStatus.ACCEPTED
-        return {"error": f"Plano com id:{id} nao encontrado"}, HTTPStatus.NOT_FOUND
         

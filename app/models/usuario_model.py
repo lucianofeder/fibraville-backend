@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Date, DateTime, String
-from app.services.helper import BaseServices
+from app.services.helper import BaseModel
 from app.configs.database import db
 from werkzeug.security import generate_password_hash, check_password_hash
 import secrets
@@ -17,7 +17,7 @@ from app.models.usuario_permissao_model import UsuarioPermissaoModel
 
 
 @dataclass
-class UsuarioModel(db.Model, BaseServices):
+class UsuarioModel(db.Model, BaseModel):
     id: int
     nome: str
     sobrenome: str

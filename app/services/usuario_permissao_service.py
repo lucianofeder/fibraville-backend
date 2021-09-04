@@ -4,8 +4,11 @@ from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
 from app.exc import DataNotFound
+from app.services.helper import BaseServices
 
-class UsuarioPermissaoService:
+
+class UsuarioPermissaoService(BaseServices):
+    model = UsuarioPermissaoModel
 
 
     @staticmethod

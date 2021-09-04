@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Float, String
 from sqlalchemy.orm import relationship
-from app.services.helper import BaseServices
+from app.services.helper import BaseModel
 from app.configs.database import db
 from dataclasses import dataclass
 # from app.models.fornecedor_model import FornecedorModel
@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ProdutoModel(db.Model, BaseServices):
+class ProdutoModel(db.Model, BaseModel):
     id: int
     modelo: str
     marca: str

@@ -1,10 +1,9 @@
 from datetime import datetime
 from app.models.visita_tecnica_model import VisitaTecnicaModel
-from app.models.produto_model import ProdutoModel
-from app.models.usuario_model import UsuarioModel
 
 from app.services.visita_tecnica_produto_service import VisitaTecnicaProdutoService
 from app.services.visita_tecnica_tecnico_service import VisitaTecnicaTecnicoService
+from app.services.helper import BaseServices
 
 from app.exc import DataNotFound
 from flask_restful import reqparse
@@ -13,26 +12,20 @@ from http import HTTPStatus
 
 import ipdb
 
-class VisitaTecnicaService:
+class VisitaTecnicaService(BaseServices):
+    model = VisitaTecnicaModel
+
 
     @staticmethod
     def get_all():
         visitas_list = VisitaTecnicaModel.query.all()
-        return jsonify([{
+        return jsonify(BaseServices.paginate([{
             "id": visita.id,
             "data_agendamento": visita.data_agendamento,
             "duracao_estimada": visita.duracao_estimada,
             "observacao": visita.observacao,
             "ordem_servico_id": visita.ordem_servico_id
-        } for visita in visitas_list]), HTTPStatus.OK 
-
-
-    @staticmethod
-    def get_by_id(visita_id) -> VisitaTecnicaModel:
-        visita = VisitaTecnicaModel.query.get(visita_id)
-        if visita:
-            return jsonify(visita.serializer()), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
+        } for visita in visitas_list])), HTTPStatus.OK 
 
 
     @staticmethod
@@ -100,11 +93,3 @@ class VisitaTecnicaService:
         visita.save()
         return jsonify(visita.serializer()), HTTPStatus.OK
 
-    
-    @staticmethod
-    def delete(visita_id) -> None:
-        visita = VisitaTecnicaModel.query.get(visita_id)
-        if visita:
-            visita.delete()
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND

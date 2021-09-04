@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, DateTime, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
-from app.services.helper import BaseServices
+from app.services.helper import BaseModel
 from app.configs.database import db
 from dataclasses import dataclass
 # from app.models.produto_model import ProdutoModel
@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class VisitaTecnicaModel(db.Model, BaseServices):
+class VisitaTecnicaModel(db.Model, BaseModel):
     id: int
     data_agendamento: datetime
     duracao_estimada: int

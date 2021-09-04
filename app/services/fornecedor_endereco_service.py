@@ -4,21 +4,11 @@ from app.models.fornecedor_model import FornecedorModel
 from flask_restful import reqparse
 from flask import jsonify
 from http import HTTPStatus
-
-class FornecedorEnderecoService:
-
-    @staticmethod
-    def get_all():
-        enderecos_list = FornecedorEnderecoModel.query.all()
-        return jsonify(enderecos_list), HTTPStatus.OK 
+from app.services.helper import BaseServices
 
 
-    @staticmethod
-    def get_by_id(endereco_id) -> FornecedorEnderecoModel:
-        endereco = FornecedorEnderecoModel.query.get(endereco_id)
-        if endereco:
-            return jsonify(endereco), HTTPStatus.OK
-        return {}, HTTPStatus.NOT_FOUND
+class FornecedorEnderecoService(BaseServices):
+    model =  FornecedorEnderecoModel
 
 
     @staticmethod
@@ -73,14 +63,6 @@ class FornecedorEnderecoService:
         
         endereco.save()
         return jsonify(endereco), HTTPStatus.OK
-
-    
-    @staticmethod
-    def delete(endereco_id) -> None:
-        fornecedor = FornecedorEnderecoModel.query.get(endereco_id)
-        if fornecedor:
-            return {}, HTTPStatus.NO_CONTENT
-        return {}, HTTPStatus.NOT_FOUND
 
 
     @staticmethod
