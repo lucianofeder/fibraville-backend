@@ -86,6 +86,7 @@ class UsuarioModel(db.Model, BaseModel):
 
     def serializer(self):
         data = {
+            "id": self.id,
             "nome": self.nome,
             "sobrenome": self.sobrenome,
             "email": self.email,
