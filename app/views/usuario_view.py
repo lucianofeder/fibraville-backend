@@ -3,8 +3,10 @@ from app.exc import DataNotFound, DuplicatedData
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import make_response
+from flask_mail import Message
 
 from app.services.usuario_service import UsuarioService
+from app.configs import mail
 
 
 class UsuarioResource(Resource):

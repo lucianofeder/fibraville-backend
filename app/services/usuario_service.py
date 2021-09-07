@@ -1,5 +1,5 @@
 from app.services.usuario_permissao_service import UsuarioPermissaoService
-from app.services.helper import BaseServices
+from app.services.helper import BaseServices, EmailServices
 from datetime import datetime
 from app.models.usuario_model import UsuarioModel
 from app.models.usuario_permissao_model import UsuarioPermissaoModel
@@ -9,6 +9,8 @@ from flask import jsonify
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
 from app.exc import DuplicatedData
+import secrets
+from threading import Thread
 
 
 class UsuarioService(BaseServices):
@@ -21,7 +23,6 @@ class UsuarioService(BaseServices):
 
         parser.add_argument("nome", type=str, required=True)
         parser.add_argument("sobrenome", type=str, required=True)
-        parser.add_argument("password", type=str, required=True)
         parser.add_argument("email", type=str, required=True)
         parser.add_argument("data_nascimento", type=datetime)
         parser.add_argument("e_pessoa_fisica", type=bool, default=True)
@@ -33,6 +34,7 @@ class UsuarioService(BaseServices):
         parser.add_argument("usuario_permissao", type=dict, required=True)
 
         data = parser.parse_args(strict=True)
+        data['password'] = secrets.token_hex(8)
 
         usuario_check = UsuarioModel.query.filter_by(cpf=data.cpf).first()
         if usuario_check:
@@ -52,6 +54,11 @@ class UsuarioService(BaseServices):
 
         new_usuario: UsuarioModel = UsuarioModel(**data)
         new_usuario.save()
+        
+        EmailServices.send_password(data['password'], new_usuario)
+
+        # thread = Thread(target=EmailServices.send_password, kwargs={'password': data['password'], 'usuario': new_usuario})
+        # thread.start()
 
         return jsonify(new_usuario), HTTPStatus.CREATED
 

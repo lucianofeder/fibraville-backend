@@ -6,6 +6,9 @@ from math import ceil
 from app.exc import PageNotFound
 from flask import request
 from sqlalchemy import desc
+from flask_mail import Message
+from flask_restful import current_app
+import ipdb
 
 
 class BaseModel():
@@ -83,3 +86,12 @@ class BaseServices():
             "next_page": f'page={next_page}&per_page={per_page}' if next_page else next_page,
             "data": data_list[((page-1)*per_page):(page*per_page)]
         }
+
+
+class EmailServices:
+    
+    @staticmethod
+    def send_password(password, usuario):
+        msg = Message('Senha para acesso plataforma Fibraville', recipients=[usuario.email])
+        msg.html = f"<h1>Ola {usuario.nome}</h1><br><h2>Sua conta na Fibraville foi criada com sucesso</h2><br><br><p>Para acessar sua conta basta visitar nosso <a href=''>site</a> e ir na seccao acesso restrito. Use as seguintes credenciais:<br><ul><li>login: seu cpf</li><li>senha: {password}</li></ul>"
+        current_app.mail.send(msg)
