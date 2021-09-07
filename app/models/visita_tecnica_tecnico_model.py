@@ -18,9 +18,9 @@ class VisitaTecnicaTecnicoModel(db.Model, BaseModel):
     tecnico_id = Column(Integer, ForeignKey("usuario.id"))
     visita_tecnica_id = Column(Integer, ForeignKey("visita_tecnica.id"))
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "tecnico_id": self.usuario_id,
-    #         "visita_tecnica_id": self.visita_tecnica_id,
-    #     }   
+    def serializer(self):
+        return {
+            "id": self.id,
+            "tecnico_id": self.usuario_id,
+            "visita_tecnica_id": self.visita_tecnica_id,
+        }   

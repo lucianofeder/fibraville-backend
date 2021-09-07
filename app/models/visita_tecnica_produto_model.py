@@ -20,10 +20,10 @@ class VisitaTecnicaProdutoModel(db.Model, BaseModel):
     visita_tecnica_id = Column(Integer, ForeignKey("visita_tecnica.id"))
     quantidade = Column(Float, default=0)
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "produto_id": self.produto_id,
-    #         "visita_tecnica_id": self.visita_tecnica_id,
-    #         "quantidade": self.quantidade
-    #     }   
+    def serializer(self):
+        return {
+            "id": self.id,
+            "produto_id": self.produto_id,
+            "visita_tecnica_id": self.visita_tecnica_id,
+            "quantidade": self.quantidade
+        }   

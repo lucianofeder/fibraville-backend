@@ -33,15 +33,11 @@ class ProdutoModel(db.Model, BaseModel):
     # planos_list = relationship("PlanoModel", secondary="plano_produto", backref="produtos_list")
     fornecedores_list = relationship("FornecedorModel", secondary="produto_fornecedor", backref="produtos_list")
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "modelo": self.modelo,
-    #         "marca": self.marca,
-    #         "valor": self.valor,
-    #         "numero_serie": self.numero_serie,
-    #         "estoque": self.estoque,
-    #         "velocidade": self.velocidade,
-    #         "fornecedores_list": self.fornecedores_list,
-    #         "planos_list": self.planos_list
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "modelo": self.modelo,
+            "valor": self.valor,
+            "estoque": self.estoque,
+            "velocidade": self.velocidade,
+        }

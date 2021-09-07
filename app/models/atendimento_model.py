@@ -36,14 +36,12 @@ class AtendimentoModel(db.Model, BaseModel):
     ordem_servico = relationship("OrdemServicoModel", backref=backref('atendimento', uselist=False))
     ordem_servico_id = Column(Integer, ForeignKey("ordem_servico.id"))
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "data": self.data,
-    #         "descricao": self.descricao,
-    #         "setor": self.setor,
-    #         "usuario_cpf": self.usuario_cpf,
-    #         "usuario_telefone": self.usuario_telefone,
-    #         "atendente_id": self.atendente_id,
-    #         "usuario_id": self.usuario_id
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "data": self.data,
+            "setor": self.setor,
+            "usuario_cpf": self.usuario_cpf,
+            "usuario_telefone": self.usuario_telefone,
+            "usuario_id": self.usuario_id
+        }

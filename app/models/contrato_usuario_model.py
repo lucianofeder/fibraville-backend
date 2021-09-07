@@ -27,12 +27,9 @@ class ContratoUsuarioModel(db.Model, BaseModel):
 
     contrato_id = Column(Integer, ForeignKey("contrato.id"))
    
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "usuario_id": self.usuario_id,
-    #         "contrato_id": self.contrato_id,
-    #         "endereco_id": self.endereco_id,
-    #         "data_inicio": self.data_inicio,
-    #         "data_fim": self.data_fim
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "data_inicio": self.data_inicio,
+            "data_fim": self.data_fim
+        }

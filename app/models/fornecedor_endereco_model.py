@@ -29,15 +29,13 @@ class FornecedorEnderecoModel(db.Model, BaseModel):
     complemento = Column(String(150))
     referencia = Column(String(150))
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "cep": self.cep,
-    #         "rua": self.rua,
-    #         "numero": self.numero,
-    #         "bairro": self.bairro,
-    #         "cidade": self.cidade,
-    #         "estado": self.estado,
-    #         "complemento": self.complemento,
-    #         "referencia": self.referencia
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "cep": self.cep,
+            "rua": self.rua,
+            "numero": self.numero,
+            "bairro": self.bairro,
+            "cidade": self.cidade,
+            "estado": self.estado,
+        }

@@ -36,16 +36,16 @@ class UsuarioNaoRegistradoModel(db.Model, BaseModel):
     estado = Column(String(150))
 
 
-    # def serializer(self):
-    #     return {
-    #         "nome": self.nome,
-    #         "telefone": self.telefone,
-    #         "e_comercial": self.e_comercial,
-    #         "cep": self.cep,
-    #         "rua": self.rua,
-    #         "numero": self.numero,
-    #         "complemento": self.complemento,
-    #         "bairro": self.bairro,
-    #         "cidade": self.cidade,
-    #         "estado": self.estado
-    #     }
+    def serializer(self):
+        return {
+            "nome": self.nome,
+            "telefone": self.telefone,
+            "e_comercial": self.e_comercial,
+            "cep": self.cep,
+            "rua": self.rua,
+            "numero": self.numero,
+            "complemento": self.complemento,
+            "bairro": self.bairro,
+            "cidade": self.cidade,
+            "estado": self.estado
+        }

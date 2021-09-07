@@ -18,9 +18,9 @@ class PlanoProdutoModel(db.Model, BaseModel):
     plano_id = Column(Integer, ForeignKey("plano.id"), nullable=False)
     produto_id = Column(Integer, ForeignKey("produto.id"), nullable=False)
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "plano_id": self.plano_id,
-    #         "produto_id": self.produto_id
-    #     }   
+    def serializer(self):
+        return {
+            "id": self.id,
+            "plano_id": self.plano_id,
+            "produto_id": self.produto_id
+        }   
