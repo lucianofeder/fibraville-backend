@@ -10,6 +10,8 @@ class UsuarioPermissaoModel(db.Model, BaseModel):
     e_cliente: bool
     e_representante: bool
     e_funcionario: bool
+    e_super_usuario: bool
+
 
     __tablename__ = "usuario_permissao"
 
@@ -18,6 +20,7 @@ class UsuarioPermissaoModel(db.Model, BaseModel):
     e_cliente = Column(Boolean, default=True)
     e_representante = Column(Boolean, default=False)
     e_funcionario = Column(Boolean, default=False)
+    e_super_usuario = Column(Boolean, default=False)
 
     def serializer(self):
         return {

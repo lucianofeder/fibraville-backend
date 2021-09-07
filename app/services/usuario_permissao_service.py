@@ -5,6 +5,7 @@ from flask import jsonify
 from http import HTTPStatus
 from app.exc import DataNotFound
 from app.services.helper import BaseServices
+import ipdb
 
 
 class UsuarioPermissaoService(BaseServices):
@@ -20,9 +21,13 @@ class UsuarioPermissaoService(BaseServices):
 
 
     @staticmethod
-    def create(usuario, e_cliente=True, e_representante=False, e_comercial=False) -> UsuarioPermissaoModel:
+    def create(e_cliente=True, e_representante=False, e_funcionario=False, e_super_usuario=False) -> UsuarioPermissaoModel:
         
-        new_usuario_permissao: UsuarioPermissaoModel = UsuarioPermissaoModel(usuario=usuario, e_cliente=e_cliente, e_representante=e_representante, e_comercial=e_comercial)
+        usuario_permissao = UsuarioPermissaoModel.query.filter_by(e_cliente=e_cliente, e_representante=e_representante, e_funcionario=e_funcionario, e_super_usuario=e_super_usuario).first()
+        if usuario_permissao:
+            return usuario_permissao
+
+        new_usuario_permissao: UsuarioPermissaoModel = UsuarioPermissaoModel(e_cliente=e_cliente, e_representante=e_representante, e_funcionario=e_funcionario, e_super_usuario=e_super_usuario)
         new_usuario_permissao.save()
 
         return new_usuario_permissao
