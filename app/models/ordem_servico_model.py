@@ -36,13 +36,11 @@ class OrdemServicoModel(db.Model, BaseModel):
 
     visitas_tecnicas_list = relationship("VisitaTecnicaModel", backref=backref("ordem_servico"))
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "data_abertura": self.data_abertura,
-    #         "data_fechamento": self.data_fechamento,
-    #         "valor": self.valor,
-    #         "proposito": self.proposito,
-    #         "descricao": self.descricao,
-    #         "visitas_tecnicas_list": self.visitas_tecnicas_list
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "data_abertura": self.data_abertura,
+            "data_fechamento": self.data_fechamento,
+            "valor": self.valor,
+            "visitas_tecnicas_list": self.visitas_tecnicas_list
+        }

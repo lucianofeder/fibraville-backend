@@ -84,31 +84,22 @@ class UsuarioModel(db.Model, BaseModel):
         return check_password_hash(self.password_hash, password_to_compare + self.salt)
 
 
-    # def serializer(self):
-    #     data = {
-    #         "nome": self.nome,
-    #         "sobrenome": self.sobrenome,
-    #         "email": self.email,
-    #         "data_nascimento": self.data_nascimento,
-    #         "data_registro": self.data_regristro,
-    #         "bloqueado": self.bloqueado,
-    #         "e_pessoa_fisica": self.e_pessoa_fisica,
-    #         "cpf": self.cpf,
-    #         "cnpj": self.cnpj,
-    #         "ultimo_login": self.ultimo_login,
-    #         "mae_nome": self.mae_nome,
-    #         "pai_nome": self.pai_nome,
-    #         "ordens_servico_list": self.ordens_servicos_list,
-    #         "usuario_permissao": self.usuario_permissao,
-    #         "usuario_endereco_list": self.usuario_endereco_list,
-    #         "contas_list": self.contas_list,
-    #         "ordens_servicos_list": self.ordens_servicos_list,
-    #         "contratos_list": self.contratos_list
-    #     }
+    def serializer(self):
+        data = {
+            "nome": self.nome,
+            "sobrenome": self.sobrenome,
+            "email": self.email,
+            "bloqueado": self.bloqueado,
+            "e_pessoa_fisica": self.e_pessoa_fisica,
+            "cpf": self.cpf,
+            "cnpj": self.cnpj,
+            "ultimo_login": self.ultimo_login,
+            "usuario_permissao": self.usuario_permissao,
+        }
 
-    #     if len(self.cpf) > 0:
-    #         data.pop('cnpj')
-    #     else:
-    #         data.pop('cpf')
+        if len(self.cpf) > 0:
+            data.pop('cnpj')
+        else:
+            data.pop('cpf')
         
-    #     return data
+        return data

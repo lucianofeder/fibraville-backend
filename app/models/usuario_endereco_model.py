@@ -50,20 +50,13 @@ class UsuarioEnderecoModel(db.Model, BaseModel):
     contrato = relationship("ContratoUsuarioModel", backref=backref('endereco', uselist=False))
     contrato_usuario_id = Column(Integer, ForeignKey("contrato_usuario.id"))
 
-    # def serializer(self):
-    #     return {
-    #         "e_comercial": self.e_comercial,
-    #         "cep": self.cep,
-    #         "rua": self.rua,
-    #         "numero": self.numero,
-    #         "complemento": self.complemento,
-    #         "bairro": self.bairro,
-    #         "cidade": self.cidade,
-    #         "estado": self.estado,
-    #         "referencia": self.referencia,
-    #         "contato": self.contato,
-    #         "wireless_login": self.wireless_login,
-    #         "wireless_senha": self.wireless_senha,
-    #         "onu_login": self.onu_login,
-    #         "onu_senha": self.onu_senha
-    #     }
+    def serializer(self):
+        return {
+            "e_comercial": self.e_comercial,
+            "cep": self.cep,
+            "rua": self.rua,
+            "numero": self.numero,
+            "bairro": self.bairro,
+            "cidade": self.cidade,
+            "estado": self.estado,
+        }

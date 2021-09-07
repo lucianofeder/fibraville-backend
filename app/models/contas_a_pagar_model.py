@@ -32,15 +32,11 @@ class ContasAPagarModel(db.Model, BaseModel):
 
     fornecedor_id = Column(Integer, ForeignKey("fornecedor.id"), nullable=False)
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "valor": self.valor,
-    #         "data_digitado": self.data_digitado,
-    #         "data_emissao": self.data_emissao,
-    #         "data_a_pagar": self.data_a_pagar,
-    #         "nfe": self.nfe,
-    #         "n_documento": self.n_documento,
-    #         "pago": self.pago,
-    #         "fornecedor_id": self.fornecedor_id
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "valor": self.valor,
+            "data_a_pagar": self.data_a_pagar,
+            "data_pago": self.data_pago,
+            "fornecedor_id": self.fornecedor_id
+        }

@@ -18,9 +18,9 @@ class ProdutoFornecedorModel(db.Model, BaseModel):
     produto_id = Column(Integer, ForeignKey("produto.id"), nullable=False)
     fornecedor_id = Column(Integer, ForeignKey("fornecedor.id"), nullable=False)
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "produto_id": self.produto_id,
-    #         "fornecedor_id": self.fornecedor_id
-    #     }   
+    def serializer(self):
+        return {
+            "id": self.id,
+            "produto_id": self.produto_id,
+            "fornecedor_id": self.fornecedor_id
+        }   

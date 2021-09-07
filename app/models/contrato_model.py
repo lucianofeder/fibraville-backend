@@ -25,10 +25,10 @@ class ContratoModel(db.Model, BaseModel):
     plano = relationship("PlanoModel", backref=backref("contrato", uselist=False))
     plano_id = Column(Integer, ForeignKey("plano.id"))
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "valor": self.valor,
-    #         "duracao_meses": self.duracao_meses,
-    #         "plano_id": self.plano_id
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "valor": self.valor,
+            "duracao_meses": self.duracao_meses,
+            "plano_id": self.plano_id
+        }

@@ -25,12 +25,11 @@ class ContasAReceberModel(db.Model, BaseModel):
 
     usuario_id = Column(Integer, ForeignKey("usuario.id"))
 
-    # def serializer(self):
-    #     return {
-    #         "id": self.id,
-    #         "valor": self.valor,
-    #         "data_a_pagar": self.data_a_pagar,
-    #         "data_pago": self.data_pago,
-    #         "pago": self.pago,
-    #         "usuario_id": self.usuario_id
-    #     }
+    def serializer(self):
+        return {
+            "id": self.id,
+            "valor": self.valor,
+            "data_a_pagar": self.data_a_pagar,
+            "data_pago": self.data_pago,
+            "usuario_id": self.usuario_id
+        }

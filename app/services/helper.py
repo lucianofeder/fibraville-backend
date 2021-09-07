@@ -26,6 +26,7 @@ class BaseServices():
     def get_all(cls):
         try:
             data_list = cls.model.query.order_by(desc(cls.model.id)).all()
+            data_list = [data.serializer() for data in data_list]
             return jsonify(BaseServices.paginate(data_list)), HTTPStatus.OK
         except PageNotFound as e:
             return e.message, HTTPStatus.NOT_FOUND
