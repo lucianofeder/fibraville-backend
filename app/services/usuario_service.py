@@ -1,3 +1,4 @@
+from app.services.usuario_permissao_service import UsuarioPermissaoService
 from app.services.helper import BaseServices
 from datetime import datetime
 from app.models.usuario_model import UsuarioModel
@@ -43,8 +44,9 @@ class UsuarioService(BaseServices):
 
         usuario_permissao = data.pop('usuario_permissao')
 
-        new_permissao = UsuarioPermissaoModel(**usuario_permissao)
-        new_permissao.save()
+        if 'e_super_usuario' in usuario_permissao:
+            usuario_permissao.pop('e_super_usuario')
+        new_permissao = UsuarioPermissaoService.create(**usuario_permissao)
 
         data.usuario_permissao_id = new_permissao.id
 
