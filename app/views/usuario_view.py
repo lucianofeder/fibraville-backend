@@ -1,12 +1,11 @@
 from http import HTTPStatus
 from app.exc import DataNotFound, DuplicatedData
-from flask_restful import Resource
+from flask_restful import Resource, current_app
 from flask_jwt_extended import jwt_required
 from flask import make_response
-from flask_mail import Message
+
 
 from app.services.usuario_service import UsuarioService
-from app.configs import mail
 
 
 class UsuarioResource(Resource):
@@ -50,3 +49,15 @@ class UsuarioLoginResource(Resource):
             return make_response(UsuarioService.login())
         except DataNotFound as e:
             return e.message, HTTPStatus.NOT_FOUND
+
+
+class UsuarioPasswordResource(Resource):
+
+    def put(self):
+        return make_response(UsuarioService.generate_temp_token())
+
+
+class UsuarioPasswordRetrieveResource(Resource):
+
+    def put(self, usuario_id):
+        return make_response(UsuarioService.new_password_from_temp_token(usuario_id))

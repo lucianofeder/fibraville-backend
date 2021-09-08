@@ -95,3 +95,9 @@ class EmailServices:
         msg = Message('Senha para acesso plataforma Fibraville', recipients=[usuario.email])
         msg.html = f"<h1>Ola {usuario.nome}</h1><br><h2>Sua conta na Fibraville foi criada com sucesso</h2><br><br><p>Para acessar sua conta basta visitar nosso <a href=''>site</a> e ir na seccao acesso restrito. Use as seguintes credenciais:<br><ul><li>login: seu cpf</li><li>senha: {password}</li></ul>"
         current_app.mail.send(msg)
+
+    @staticmethod
+    def send_temp_token(token, usuario):
+        msg = Message('Recuperacao de Senha - Fibraville', recipients=[usuario.email])
+        msg.html = f"Para solicitar uma senha nova acesse o <a href='https://localhost.com/{usuario.id}/{token}'>link</a>"
+        current_app.mail.send(msg)

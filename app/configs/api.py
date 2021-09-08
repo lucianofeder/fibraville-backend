@@ -78,10 +78,13 @@ def init_app(app: Flask) -> None:
     api.add_resource(ProdutoByFornecedorResource, "/api/v1/fornecedor/<int:fornecedor_id>/produto/")
 
 
-    from app.views.usuario_view import UsuarioResource, UsuarioRetrieveResource, UsuarioLoginResource
+    from app.views.usuario_view import UsuarioResource, UsuarioRetrieveResource, UsuarioLoginResource, UsuarioPasswordResource, UsuarioPasswordRetrieveResource
     api.add_resource(UsuarioResource, "/api/v1/usuario", endpoint="USUARIOS")
     api.add_resource(UsuarioRetrieveResource, "/api/v1/usuario/<int:usuario_id>", endpoint="USUARIO_ID")
     api.add_resource(UsuarioLoginResource, "/api/v1/login", endpoint="LOGIN")
+    api.add_resource(UsuarioPasswordResource, "/api/v1/usuario/generate_temp_token", endpoint="TEMP_TOKEN")
+    api.add_resource(UsuarioPasswordRetrieveResource, "/api/v1/usuario/<int:usuario_id>/recover_password", endpoint="RECOVER_PASSWORD")
+
 
 
     from app.views.visita_tecnica_view import VisitaTecnicaResource, VisitaTecnicaRetrieveResource
