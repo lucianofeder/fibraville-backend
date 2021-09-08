@@ -1,9 +1,8 @@
 from datetime import timedelta
 from flask import Flask
 from environs import Env
-from app.configs import api, database, migration, jwt, commands, mail
+from app.configs import api, database, migration, jwt, commands, mail, cache
 from flask_cors import CORS
-from app.services.helper import teste_render
 
 
 def create_app() -> Flask:
@@ -29,6 +28,9 @@ def create_app() -> Flask:
     app.config["MAIL_DEFAULT_SENDER"] = env("MAIL_USERNAME")
     app.config["MAIL_MAX_EMAILS"] = None
     app.config["MAIL_ASCII_ATTACHMENTS"] = False
+
+    app.config["CACHE_TYPE"] = "SimpleCache"
+    app.config["CACHE_DEFAULT_TIMEOUT"] = 300
     
 
     database.init_app(app)
@@ -36,6 +38,7 @@ def create_app() -> Flask:
     commands.init_app(app)
     jwt.init_app(app)
     mail.init_app(app)
+    cache.init_app(app)
     api.init_app(app)
 
     return app

@@ -4,7 +4,7 @@ from datetime import datetime
 from app.models.usuario_model import UsuarioModel
 from app.models.usuario_permissao_model import UsuarioPermissaoModel
 from app.exc import DataNotFound
-from flask_restful import reqparse
+from flask_restful import reqparse, current_app
 from flask import jsonify
 from flask_jwt_extended import create_access_token
 from http import HTTPStatus
@@ -114,3 +114,49 @@ class UsuarioService(BaseServices):
         else:
             return {"mensagem": "Informacoes de login invalidas"}, HTTPStatus.UNAUTHORIZED
 
+    @staticmethod
+    def generate_temp_token():
+        parser = reqparse.RequestParser()
+
+        parser.add_argument("cpf", type=str, required=True)
+        parser.add_argument("email", type=str, required=True)
+
+        data = parser.parse_args()
+
+        usuario = UsuarioModel.query.filter_by(cpf=data['cpf']).first()
+
+        if not usuario or usuario.email != data['email']:
+            return {"error": "Informacoes invalidas"}, HTTPStatus.BAD_REQUEST
+        
+        temp_token = secrets.token_hex(32)
+        current_app.cache.set(f"{data['email']}_temp_token", temp_token)
+
+        EmailServices.send_temp_token(temp_token, usuario)
+
+        return {"message": "Link de recuperacao enviado para o email", "token": temp_token}, HTTPStatus.OK
+    
+    @staticmethod
+    def new_password_from_temp_token(usuario_id):
+        parser = reqparse.RequestParser()
+
+        parser.add_argument("cpf", type=str, required=True)
+        parser.add_argument("password", type=str, required=True)
+        parser.add_argument("temp_token", type=str, required=True)
+
+        data = parser.parse_args()
+        
+        usuario = UsuarioModel.query.get(usuario_id)
+        temp_token = current_app.cache.get(f"{usuario.email}_temp_token")
+
+        if usuario.cpf != data['cpf'] or temp_token != data['temp_token']:
+            return {}, HTTPStatus.BAD_REQUEST
+        
+        usuario.password = data['password']
+        usuario.save()
+
+        return {"message": "Senha trocada com sucesso"}, HTTPStatus.ACCEPTED
+
+
+        
+
+        
