@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  postgres:
+    ports: - 5432:5432
+    volumes:
+      - postgre:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  flask:
+    build: .
+    ports: - 8000:8000
+    # command: 
+    entrypoint: ./entrypoint.sh
+    stdin_open: true
+    tty: true
+    volumes: 
+      - .:/code
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgre:
+    external: true
