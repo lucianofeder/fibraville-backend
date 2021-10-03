@@ -1,11 +1,13 @@
 FROM python:3.9
 
-COPY . /code/
-
-WORKDIR /code
+WORKDIR /app
+COPY . .
 
 RUN pip install -r requirements.txt
+RUN pip install psycopg2
 
 ENV PYTHONUNBUFFERED=1
 
-# EXPOSE 8000 porta para expor do APP
+ENTRYPOINT ["./entrypoint.sh"]
+
+EXPOSE 8000

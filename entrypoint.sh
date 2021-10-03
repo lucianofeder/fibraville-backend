@@ -1,5 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
-flask db migrate
-
+flask db upgrade
 exec "$@"
+gunicorn -c "guinicorn.conf.py" "app:create_app()"

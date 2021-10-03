@@ -1,0 +1,6 @@
+venv/
+.example.env
+tests
+.gitignore
+.dockerignore
+.git
