@@ -2,7 +2,6 @@ from app.services.usuario_permissao_service import UsuarioPermissaoService
 from app.services.helper import BaseServices, EmailServices
 from datetime import datetime
 from app.models.usuario_model import UsuarioModel
-from app.models.usuario_permissao_model import UsuarioPermissaoModel
 from app.exc import DataNotFound
 from flask_restful import reqparse, current_app
 from flask import jsonify
@@ -10,7 +9,6 @@ from flask_jwt_extended import create_access_token
 from http import HTTPStatus
 from app.exc import DuplicatedData
 import secrets
-from threading import Thread
 
 
 class UsuarioService(BaseServices):
@@ -96,12 +94,24 @@ class UsuarioService(BaseServices):
     def login():
         parser = reqparse.RequestParser()
 
-        parser.add_argument("cpf", type=str, required=True)
+        parser.add_argument("cpf", type=str, store_missing=True)
+        parser.add_argument("cnpj", type=str, store_missing=True)
         parser.add_argument('password', type=str, required=True)
 
         data = parser.parse_args(strict=True)
 
-        usuario: UsuarioModel = UsuarioModel.query.filter_by(cpf=data['cpf']).first()
+        if "cpf" not in data.keys() and "cnpj" not in data.keys():
+            return {"mensagem": "Informacoes de login invalidas"}, HTTPStatus.BAD_REQUEST
+        
+        if "cpf" in data.keys() and "cnpj" in data.keys():
+            return {"mensagem": "Deve ser enviado apenas CPF ou CNPJ"}
+
+        if "cpf" in data.keys() and len(data["cpf"] == 11):
+            usuario: UsuarioModel = UsuarioModel.query.filter_by(cpf=data['cpf']).first()
+
+        if "cnpj" in data.keys() and len(data["cnpj"] == 14):
+            usuario: UsuarioModel = UsuarioModel.query.filter_by(cpf=data['cnpj']).first()
+
 
         if not usuario:
             raise DataNotFound('Usuario')
@@ -118,12 +128,23 @@ class UsuarioService(BaseServices):
     def generate_temp_token():
         parser = reqparse.RequestParser()
 
-        parser.add_argument("cpf", type=str, required=True)
+        parser.add_argument("cpf", type=str, store_missing=False)
+        parser.add_argument("cnpj", type=str, store_missing=False)
         parser.add_argument("email", type=str, required=True)
 
         data = parser.parse_args()
 
-        usuario = UsuarioModel.query.filter_by(cpf=data['cpf']).first()
+        if "cpf" not in data.keys() and "cnpj" not in data.keys():
+            return {"mensagem": "Informacoes invalidas"}, HTTPStatus.BAD_REQUEST
+        
+        if "cpf" in data.keys() and "cnpj" in data.keys():
+            return {"mensagem": "Deve ser enviado apenas CPF ou CNPJ"}
+
+        if "cpf" in data.keys() and len(data["cpf"] == 11):
+            usuario: UsuarioModel = UsuarioModel.query.filter_by(cpf=data['cpf']).first()
+
+        if "cnpj" in data.keys() and len(data["cnpj"] == 14):
+            usuario: UsuarioModel = UsuarioModel.query.filter_by(cpf=data['cnpj']).first()
 
         if not usuario or usuario.email != data['email']:
             return {"error": "Informacoes invalidas"}, HTTPStatus.BAD_REQUEST
@@ -139,16 +160,32 @@ class UsuarioService(BaseServices):
     def new_password_from_temp_token(usuario_id):
         parser = reqparse.RequestParser()
 
-        parser.add_argument("cpf", type=str, required=True)
+        parser.add_argument("cpf", type=str, store_missing=False)
+        parser.add_argument("cnpj", type=str, store_missing=False)
         parser.add_argument("password", type=str, required=True)
         parser.add_argument("temp_token", type=str, required=True)
 
         data = parser.parse_args()
+
+        if "cpf" not in data.keys() and "cnpj" not in data.keys():
+            return {"mensagem": "Informacoes invalidas"}, HTTPStatus.BAD_REQUEST
+        
+        if "cpf" in data.keys() and "cnpj" in data.keys():
+            return {"mensagem": "Deve ser enviado apenas CPF ou CNPJ"}
+
+        if "cpf" in data.keys() and len(data["cpf"] == 11):
+            key_to_compare = "cpf"
+        
+        if "cnpj" in data.keys() and len(data["cnpj"] == 14):
+            key_to_compare = "cnpj"
+        
+        if not key_to_compare:
+            return {"mensagem": "Informacoes invalidas"}, HTTPStatus.BAD_REQUEST
         
         usuario = UsuarioModel.query.get(usuario_id)
         temp_token = current_app.cache.get(f"{usuario.email}_temp_token")
 
-        if usuario.cpf != data['cpf'] or temp_token != data['temp_token']:
+        if usuario[key_to_compare] != data[key_to_compare] or temp_token != data['temp_token']:
             return {}, HTTPStatus.BAD_REQUEST
         
         usuario.password = data['password']
