@@ -30,8 +30,7 @@ def create_app() -> Flask:
     app.config["MAIL_ASCII_ATTACHMENTS"] = False
 
     app.config["CACHE_TYPE"] = "SimpleCache"
-    app.config["CACHE_DEFAULT_TIMEOUT"] = 300
-    
+    app.config["CACHE_DEFAULT_TIMEOUT"] = 300    
 
     database.init_app(app)
     migration.init_app(app)
